@@ -1,0 +1,44 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+html {
+    font-size: 62.5%;
+    background-image: url(../imagenes/fondo.jpg);
+    background-repeat: repeat;
+    background-color:rgb(100, 100, 100);
+    background-blend-mode: soft-light;
+}
+$bordemain: 5px solid #092327;
+$bgmain: rgba(0, 0, 0, 0.6);
+$radio: 0.7rem;
+$transition: all 0.5s ease;
+@mixin flex-column-center-w-sb{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.wrapper {
+    font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns:      auto auto;
+    grid-template-areas:    'logo       logo  '
+                            'menu       menu '
+                            'tituof     tituof '
+                            'nosotros   nosotros '
+                            'foot       foot';
+
+         
+    @import "logo";
+    @import "menu";
+    @import "tituof";
+    @import "nosotros";
+    @import "catalogo";
+    @import "foot";
+}
+    
+@import "responsive";

@@ -1,0 +1,126 @@
+.nosotros{ 
+    grid-area: nosotros;
+
+    .subNosotros,.guia {
+        margin: 10%;
+        background: $bgmain;
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: $radio;           
+    }
+    .subNosotros.nos {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        border: $bordemain;
+        img {
+            width: 50%;
+            border-radius: $radio;
+            grid-area: ramon;
+            grid-column: 1/3;
+            grid-row: 1/3;
+            filter: grayscale(100%);
+            transition: $transition;
+            &:hover {
+                filter: grayscale(0%);
+                transition: $transition;
+            }   
+        }                     
+        p1 {
+            padding: 2%;
+            grid-area: h1;
+            grid-column: 2/4;
+            grid-row: 1/2;
+        
+            font-size: 300%;
+            color: #fff;
+            text-align: center;
+            align-self: center;
+        }
+        h1 {
+            grid-area: div;
+            grid-column: 2/4;
+            grid-row: 2/2;            
+            line-height: 200%;
+            color: #fff;
+            text-align: center;            
+        }
+    }
+    .subNosotros.guia {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: repeat(5, 1fr);
+        border: $bordemain;
+        .guia2,.guia3,.guia4,.guia5 {
+            text-align: center;
+            padding: 5%;
+            filter: grayscale(100%);
+            transition: $transition;
+        }
+        .guia2:hover, .guia3:hover, .guia4:hover, .guia5:hover {
+            filter: grayscale(0%);
+            transition: $transition;
+        }
+        img {
+            border: $bordemain;
+            border-radius: $radio;
+        } 
+        .guia1,.guia6,.guia7,.guia8,.guia9 {
+            align-self: center;
+            color: #fff;
+            text-align: end;
+            align-self: center;
+            font-size: 300%;
+        }  
+        .guia1 {
+            font-size: 600%;
+            text-align: center;
+            grid-area: guia1;
+            grid-column: 1/4;
+            grid-row: 1/1;
+        }
+        .guia2 {
+            grid-area: guia2;
+            grid-column: 1/1;
+            grid-row: 2/2;            
+        }
+        .guia3 {
+            grid-area: guia3;
+            grid-column: 1/1;
+            grid-row: 3/3;            
+        }
+        .guia4 {
+            grid-area: guia4;
+            grid-column: 1/1;
+            grid-row: 4/4;            
+        }
+        .guia5 {
+            grid-area: guia5;
+            grid-column: 1/1;
+            grid-row: 5/5;            
+        }
+        .guia6 {
+            grid-area: guia6;
+            grid-column: 2/4;
+            grid-row: 2/2;            
+        }
+        .guia7 {
+            grid-area: guia7;
+            grid-column: 2/4;
+            grid-row: 3/3;            
+        }
+        .guia8 {
+            grid-area: guia8;
+            grid-column: 2/4;
+            grid-row: 4/4;            
+        }
+        .guia9 {
+            grid-area: guia9;
+            grid-column: 2/4;
+            grid-row: 5/5;
+        } 
+        img {
+            width: 100%;
+        }                      
+    }
+}

@@ -1,0 +1,72 @@
+@media (min-width: 111px) and (max-width: 991px) {
+    .wrapper{
+        .menu, .tituof .ofertas {
+        @include flex-column-center-w-sb;         
+    }
+        .menu{
+            div {
+                padding: 5%;
+            } 
+            p:hover {
+                background-color: #ef8354;
+                border-radius: $radio;
+                transition: $transition;
+            }  
+        }
+        .tituof{
+            .ofertas{
+                div {
+                    padding: 5%;
+                }
+            }
+        }
+        .nosotros{
+            .subNosotros.nos {
+                @include flex-column-center-w-sb;
+            }
+            .subNosotros.guia {
+                @include flex-column-center-w-sb;
+                padding: 5%;
+                .guia1 {
+                    order: 1;
+                }
+                .guia2 {
+                    order: 2;
+                }
+                .guia3 {
+                    order: 4;
+                }
+                .guia4 {
+                    order: 6;
+                }
+                .guia5 {
+                    order: 8;
+                }
+                .guia6 {
+                    order: 3;
+                }  
+                .guia7 {
+                    order: 5;
+                }      
+                .guia8 {
+                    order: 7;
+                }    
+                .guia9 {
+                    order: 9;
+                }
+                img {
+                    width: 50vw;
+                }               
+            }
+        }
+        .foot {
+            @include flex-column-center-w-sb;
+            flex-wrap: nowrap;
+        }
+        .catalogo {
+            @include flex-column-center-w-sb;
+            flex-direction: row;
+        }
+    }
+
+}

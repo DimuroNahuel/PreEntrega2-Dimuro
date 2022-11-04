@@ -1,0 +1,40 @@
+.tituof {
+    grid-area: tituof;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+
+    padding: 1rem;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: $radio;
+    border: $bordemain;
+    background: $bgmain;
+
+    .titulo {
+        color: #fff;
+        text-align: center;
+        font-size: 2.4rem;
+        grid-column: 1/4;
+        grid-row: 1/1;
+    }
+    .ofertas {
+        grid-column: 1/4;
+        grid-row: 2/2;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        img {
+            filter: grayscale(100%);
+            border-radius: $radio;
+            transition: $transition;
+            &:hover {
+                transform: scale(1.25);
+                filter: grayscale(0%);
+                transition: $transition;
+                border: $bordemain;                
+            }                    
+        }        
+    }
+}

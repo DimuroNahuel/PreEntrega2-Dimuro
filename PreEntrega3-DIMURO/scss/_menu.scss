@@ -1,0 +1,28 @@
+.menu {
+    grid-area: menu;
+    padding: 2.5rem;
+    background: $bgmain;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: $radio;
+    border: $bordemain;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    
+    div {
+        a{
+            text-decoration: none;
+            color: white;
+            padding: 2rem;
+            font-size: 1.5rem; 
+            &:hover {
+                background-color: #ef8354;
+                border-radius: $radio;
+                transition: $transition;
+            }                            
+        }                       
+    }
+
+}

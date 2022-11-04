@@ -1,0 +1,67 @@
+.foot {
+    grid-area: foot;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    .contacto {
+        width: 45rem;
+        margin: 5%;
+        padding: 1rem 2rem;
+        box-sizing: border-box;
+        border-radius: $radio;
+        border: $bordemain;
+        background: $bgmain;
+        grid-column: 1/1;
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            font-size: 30;
+            margin-bottom: 2rem;
+        }
+        input,textarea {
+            width: 100%;
+            margin-bottom: 2rem;
+            padding: $radio;
+            box-sizing: border-box;
+            font-size: 1.7rem;
+            border: none;
+            border-radius: $radio;
+        }
+        textarea {
+            min-height: 10rem;
+            max-height: 20rem;
+            max-width: 100%;
+        }
+        #boton {
+            background-color: #092327;
+            color: #fff;
+            padding: 2rem;
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.05);
+                transition: $transition;                
+            }
+        }            
+    }
+     
+    .redes {
+        border: $bordemain;
+        background: $bgmain;
+        padding: 3%;
+        margin: 5%;
+        border-radius: $radio;    
+        grid-column: 3/3;
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        align-self: flex-end;
+        img {
+            width: 20%;
+            filter: invert(9%) sepia(48%) saturate(686%) hue-rotate(140deg) brightness(96%) contrast(96%);
+            &:hover {
+                transform: scale(1.25);
+                transition: $transition;
+            }        
+        }        
+    }        
+}

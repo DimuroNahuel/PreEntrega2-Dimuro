@@ -1,0 +1,18 @@
+{
+  "name": "preentrega3-dimuro",
+  "version": "1.0.0",
+  "description": "Convirtiendo css a scss",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "node-sass --include-path scss scss/main.scss css/main.css ",    
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+
+  },
+  "author": "Dimuro Nahuel",
+  "license": "MIT",
+  "devDependencies": {
+    "node-sass": "^7.0.3",
+    "nodemon": "^2.0.20"
+  }
+}
