@@ -27,14 +27,19 @@ div .title {
     font-size: 35px;
     font-weight: 800;
     margin-bottom: 30px;
+    
 }
 
 
-div button {
+div a {
     color: #fff;
     border: none;
     background: linear-gradient(to right, #cb232c, #ce1d61);
     padding: 10px 15px;
     cursor: pointer;
     font-size: 20px;
+}
+
+#volver{
+    text-decoration:none;
 }
