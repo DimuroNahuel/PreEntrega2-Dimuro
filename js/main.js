@@ -1,7 +1,8 @@
 
 let usserSave="admin"; //defino los datos del login
 let passSave="1234";
-
+let datos=[];
+let Ussers=[{usserSavee:"admin", passSavee:"1234"}];
 function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes de dar error.
     let ingresar=false;
     for (let i=2; i>=0; i--){ //ciclo para contabilizar la cantidad de intentos.
@@ -21,22 +22,31 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
 }
 
 function menuPrincipal (){
-    let opcionMenu=prompt("Seleccione opcion: \n 1- Mi cuenta\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver");
+    let opcionMenu=prompt("Seleccione opcion: \n 1- Mostrar datos\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver al panel");
     switch(opcionMenu){
         case "1": {
-            alert("Accediste a tu cuenta");
+            alert("Mostrando datos\n "+ datos);
+            menuPrincipal ()
             break;
         }
         case "2": {
-            alert("Ingresaste un dato");
+            let datoAgregado=prompt("Ingrese dato \n Ingrese 0 para salir");
+            while (datoAgregado!=0){
+                datos.push(datoAgregado);
+                datoAgregado=prompt("Ingrese dato \n Ingrese 0 para salir");
+            }
+            menuPrincipal ()
             break;
         }
         case "3": {
-            alert("Eliminaste un dato");
+            let datoBorrar=prompt("Mostrando datos \n escriba el nombre del dato a borrar: \n" + datos)
+            let buscador = datos.indexOf(datoBorrar);
+            datos.splice(buscador,1);
+            menuPrincipal ()
             break;
         }
         case "4": {
-            alert("Volviendo...");
+            alert("Volviendo al panel");
             break;
         }
         
@@ -44,11 +54,15 @@ function menuPrincipal (){
 }
 
 
+
 var botonIngresar = document.getElementById("logear"); 
 var botonMenu = document.getElementById("menu");
 
+
+
 if (botonIngresar) botonIngresar.addEventListener("click",ingresarUsuario);
 if (botonMenu) botonMenu.addEventListener("click",menuPrincipal);
+
 
 
 
