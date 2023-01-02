@@ -41,8 +41,15 @@ function menuPrincipal (){
         case "3": {
             let datoBorrar=prompt("Mostrando datos \n escriba el nombre del dato a borrar: \n" + datos)
             let buscador = datos.indexOf(datoBorrar);
-            datos.splice(buscador,1);
-            menuPrincipal ()
+            if (buscador!=-1){
+                datos.splice(buscador,1);
+                menuPrincipal ()
+            }
+            else {
+                alert("dato invalido");
+                menuPrincipal ()
+            }
+            
             break;
         }
         case "4": {
