@@ -20,7 +20,7 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
 }
 
 function menuPrincipal (){
-    let opcionMenu=prompt("Seleccione opcion: \n 1- Mostrar datos\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver al panel");
+    let opcionMenu=prompt("Seleccione opcion: \n 1- Mostrar datos\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver al menu");
     switch(opcionMenu){
         case "1": {
             alert("Mostrando datos\n "+ datos);
@@ -28,33 +28,38 @@ function menuPrincipal (){
             break;
         }
         case "2": {
-            let datoAgregado=prompt("Ingrese dato \n Ingrese 0 para dejar de agregar datos");
+            let datoAgregado=prompt("Ingrese dato o digite 0 para dejar de agregar \n DATOS ACTUALES:\n " +datos);
             while (datoAgregado!=0){
                 datos.push(datoAgregado);
-                datoAgregado=prompt("Ingrese dato \n Ingrese 0 para dejar de agregar datos");
+                datoAgregado=prompt("Ingrese dato o digite 0 para dejar de agregar \n DATOS ACTUALES:\n " +datos);
             }
             menuPrincipal ()
             break;
         }
         case "3": {
-            let datoBorrar=prompt("Mostrando datos \n escriba el nombre del dato a borrar: \n" + datos)
+            let datoBorrar=prompt("Mostrando datos, digite 0 para volver o \n escriba el nombre del dato a borrar: \n" + datos)
             let buscador = datos.indexOf(datoBorrar);
             if (buscador!=-1){
                 datos.splice(buscador,1);
+                menuPrincipal ()
+            }
+            if (datoBorrar==0){
                 menuPrincipal ()
             }
             else {
                 alert("dato invalido");
                 menuPrincipal ()
             }
-            
             break;
         }
         case "4": {
-            alert("Volviendo al panel");
+            alert("Volviendo al menu");
             break;
         }
-        
+        default:{
+            alert("INVALIDO!");
+            menuPrincipal ();
+        }
     }
 }
 
