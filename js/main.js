@@ -7,17 +7,15 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
     let ingresar=false;
     for (let i=2; i>=0; i--){ //ciclo para contabilizar la cantidad de intentos.
         let usser=prompt("Ingrese usuario \n"+(i+1)+" intentos restantes");
-        if (usser==-1){ 
-            break;
-        } //breakpoint de emergencia, para pruebas y poder cancelar.
         let usserPass=prompt("Ingrese pass  ");
         if (usser==usserSave && passSave==usserPass){//comparacion de usuario ingresado con el de la bd.
             window.location="logged.html"; //si se logea correctamente, te envia a una pagina.
             ingresar=true;
             break;
         }
-  
-        else window.location="error.html";//al equivocarse 3 veces, te envia a otra pagina.
+        if (i<1 && !ingresar) {
+            window.location="error.html";
+        }//al equivocarse 3 veces, te envia a otra pagina.
     }
 }
 
@@ -30,10 +28,10 @@ function menuPrincipal (){
             break;
         }
         case "2": {
-            let datoAgregado=prompt("Ingrese dato \n Ingrese 0 para salir");
+            let datoAgregado=prompt("Ingrese dato \n Ingrese 0 para dejar de agregar datos");
             while (datoAgregado!=0){
                 datos.push(datoAgregado);
-                datoAgregado=prompt("Ingrese dato \n Ingrese 0 para salir");
+                datoAgregado=prompt("Ingrese dato \n Ingrese 0 para dejar de agregar datos");
             }
             menuPrincipal ()
             break;
