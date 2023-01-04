@@ -25,7 +25,7 @@ function menuPrincipal (){
     switch(opcionMenu){//menu dentro del login
         case "1": {
             alert("Mostrando datos\n "+ datos); 
-            menuPrincipal ()
+            menuPrincipal ();
             break;
         }//muestra los datos almacenados 
         case "2": {
@@ -39,17 +39,18 @@ function menuPrincipal (){
         }//agrega datos
         case "3": {
             let datoBorrar=prompt("Mostrando datos, digite 0 para volver o \n escriba el nombre del dato a borrar: \n" + datos)//solicita el dato a borrar o el numero 0 para volver.
+            if (datoBorrar==0){ //si presiona el 0 vuelve al menu
+                menuPrincipal ();
+                break;
+            }
             let buscador = datos.indexOf(datoBorrar); //valida que el dato a borrar exista en el array.
             if (buscador!=-1){ //si encuentra el valor, lo borrará, sinó pasará al siguiente if
                 datos.splice(buscador,1);
-                menuPrincipal ()
-            }
-            if (datoBorrar==0){ //si presiona el 0 vuelve al menu
-                menuPrincipal ()
+                menuPrincipal ();
             }
             else {
                 alert("dato invalido"); //si no se encuentra el dato a borrar y tampoco es presionado el 0, dará error.
-                menuPrincipal ()
+                menuPrincipal ();
             }
             break;
         }
@@ -60,6 +61,7 @@ function menuPrincipal (){
         default:{
             alert("INVALIDO!");//de presionarse otro boton fuera de los definidos, dará error.
             menuPrincipal ();
+            break;
         }
     }
 }
