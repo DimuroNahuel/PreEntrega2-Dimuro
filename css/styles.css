@@ -33,7 +33,7 @@ div .title {
 
 div a {
     color: #fff;
-    border: none;
+    border: 1px solid #092327;
     background: linear-gradient(to right, #cb232c, #ce1d61);
     padding: 10px 15px;
     cursor: pointer;
