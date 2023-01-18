@@ -104,24 +104,29 @@ function registro (){//funcion para registrar nuevo usuario.
     }
 }
 
+function logeado(){
+    botonArriba.setAttribute("class", "claseMenu");
+    botonAbajo.setAttribute("class", "claseDeslogear");
+    document.getElementById("idLogear").innerHTML= "MENU"
+    document.getElementById("idRegistrar").innerHTML= "SALIR"   
+    if (botonArriba) botonArriba.addEventListener("click",menuPrincipal);
+    if (botonAbajo) botonAbajo.addEventListener("click",deslogear);
+}
+
+function deslogear(){
+    ingresar=false;
+    botonArriba.setAttribute("class", "claseIngreso");
+    botonAbajo.setAttribute("class", "claseRegistro");
+    document.getElementById("idLogear").innerHTML= "LOGEAR"
+    document.getElementById("idRegistrar").innerHTML= "REGISTRAR"
+}
+
 var botonArriba = document.getElementById("idLogear"); //defino eventos para los botones.
 var botonAbajo = document.getElementById("idRegistrar");
 
-var claseBotonArriba = document.getElementById('idLogear').className;
-var claseBotonAbajo = document.getElementById('idRegistrar').className;
+if (botonArriba) botonArriba.addEventListener("click",ingresarUsuario);
+if (botonAbajo) botonAbajo.addEventListener("click",registro);
 
-if ((botonArriba) && (claseBotonArriba=="claseIngreso")) botonArriba.addEventListener("click",ingresarUsuario); //defino la accion para invocar los eventos.
-if ((botonAbajo)&& (claseBotonAbajo=="claseRegistro")) botonAbajo.addEventListener("click",registro);
-
-if ((botonArriba) && (claseBotonArriba=="claseMenu")) botonArriba.addEventListener("click",menuPrincipal); //defino la accion para invocar los eventos.
-if ((botonAbajo)&& (claseBotonAbajo=="claseDeslogear")) botonAbajo.addEventListener("click",deslogear);
-
-
-
-
-
-
-// const guardarLocal = (clave, valor) => {localStorage.setItem(clave, valor)};
 function guardarLocal(arr, arrSave){
     localStorage.setItem(arr,JSON.stringify(arrSave))
 };
@@ -132,29 +137,4 @@ function sacarLocal(){
         ussers=arrayAux;
     }
     guardarLocal("usuarios",ussers);
-}
-
-function logeado(){
-    // document.classList.replace("claseIngreso", "claseMenu");
-    // document.classList.replace("claseRegistro", "claseDeslogear");
-    document.getElementById('idLogear').className= "claseMenu"
-    document.getElementById('idRegistrar').className= "claseDeslogear"
-    document.getElementById("idLogear").innerHTML= "NAVEGADOR"
-    document.getElementById("idRegistrar").innerHTML= "MENU"
-    // document.getElementById("registrar").innerHTML= "DESLOGEAR"
-    // document.getElementById("idLogear").id ="menu"
-    // document.getElementById("registrar").id = "deslogear"
-    // var botonMenu = document.getElementsByClassName("menu");
-    // var botonDeslogear = document.getElementsByClassName("deslogear");
-    // if (botonMenu) botonMenu.addEventListener("click",menuPrincipal);
-    // if (botonMenu) botonDeslogear.addEventListener("click",deslogear);
-}
-
-function deslogear(){
-    ingresar=false;
-    document.getElementById("menu").innerHTML= "LOGEAR"
-    document.getElementById("deslogear").innerHTML= "REGISTRAR"
-    // document.getElementById("menu").id= "idLogear"
-    // document.getElementById("deslogear").id= "registrar"
-    // document.getElementById("NAVEGADOR").innerHTML= "nav"
 }
