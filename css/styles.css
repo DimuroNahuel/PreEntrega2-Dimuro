@@ -20,6 +20,7 @@ div {
     text-align: center;
     padding: 20px 25px;
     box-shadow: 0 5px 10px rgba(71, 3, 6, 0.7);
+    border: 1px solid #092327;
 }
 
 div .title {
@@ -42,4 +43,16 @@ div a {
 
 #volver{
     text-decoration:none;
+}
+
+.menu{
+
+}
+
+.deslogear{
+
+}
+
+.NAVEGADOR{
+    
 }
