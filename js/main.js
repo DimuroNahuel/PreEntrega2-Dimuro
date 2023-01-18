@@ -11,16 +11,13 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
             let usserPass=prompt("Ingrese pass  ");
             let buscar = ussers.findIndex(ussers=>ussers.usserSavee==usser);
             if ((buscar!=-1)&&(ussers[buscar].passSavee==usserPass)){//comparacion de usuario ingresado con el de la bd.
-                // window.location="logged.html"; //si se logea correctamente, te envia a una pagina.
-                ingresar=true;
-                logeado();
+                ingresar=true;      //si los datos ingresados coinciden con los guardados, se validará la autentificacion. 
+                logeado();  //funcion llamada al estar logeado correctamente
                 break;
             }
-
-            if (i<1 && ingresar==false) {
+            if (i<1 && ingresar==false) { //si ingresa datos invalidos dará error.
                 document.getElementById("idLogear").innerHTML= "DATOS INVALIDOS, INTENTE NUEVAMENTE"
-            
-            }//al equivocarse 3 veces, te envia a otra pagina.
+            }/
         }
     }
 
@@ -62,7 +59,7 @@ function menuPrincipal (){
                 break;
             }
             case "": {
-                alert("DEBE INGRESAR UN DATO");
+                alert("DEBE INGRESAR UN DATO");//si se presiona aceptar sin introducir datos, tira error.
                 menuPrincipal ();
                 //opcion para volver.
                 break;
@@ -105,13 +102,13 @@ function registro (){//funcion para registrar nuevo usuario.
 }
 
 function logeado(){
-    botonArriba.setAttribute("class", "claseMenu");
-    botonAbajo.setAttribute("class", "claseDeslogear");
-    document.getElementById("idLogear").innerHTML= "MENU"
-    document.getElementById("idRegistrar").innerHTML= "SALIR"   
-    if (botonArriba) botonArriba.addEventListener("click",menuPrincipal);
+    botonArriba.setAttribute("class", "claseMenu"); //cambio de clase
+    botonAbajo.setAttribute("class", "claseDeslogear"); //cambio de clase
+    document.getElementById("idLogear").innerHTML= "MENU" //cambia el texto del boton
+    document.getElementById("idRegistrar").innerHTML= "SALIR"   //cambia el texto del boton
+    if (botonArriba) botonArriba.addEventListener("click",menuPrincipal); //cambia el evento del boton
     if (botonAbajo) botonAbajo.addEventListener("click",deslogear);
-}
+} //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
 
 function deslogear(){
     ingresar=false;
@@ -119,17 +116,17 @@ function deslogear(){
     botonAbajo.setAttribute("class", "claseRegistro");
     document.getElementById("idLogear").innerHTML= "LOGEAR"
     document.getElementById("idRegistrar").innerHTML= "REGISTRAR"
-}
+} //esta funcion se habilita al salir del menu, vuelve a poner las clases y los textos como  estaban al principio, para mostrar un menu de logeo nuevmante.
 
 var botonArriba = document.getElementById("idLogear"); //defino eventos para los botones.
 var botonAbajo = document.getElementById("idRegistrar");
 
-if (botonArriba) botonArriba.addEventListener("click",ingresarUsuario);
+if (botonArriba) botonArriba.addEventListener("click",ingresarUsuario); //evento se ejecuta al presionar el boton.
 if (botonAbajo) botonAbajo.addEventListener("click",registro);
 
 function guardarLocal(arr, arrSave){
     localStorage.setItem(arr,JSON.stringify(arrSave))
-};
+}; // funcion para guardar los usuarios registrados en el localstore
 function sacarLocal(){
     arrayAux=localStorage.getItem("usuarios");
     for (x=ussers.length; x<=0;x--){
@@ -137,4 +134,5 @@ function sacarLocal(){
         ussers=arrayAux;
     }
     guardarLocal("usuarios",ussers);
-}
+} //funcion ejecutada luego del registro, se crea un array auxiliar para tomar valores momentaneamente y de esta manera
+//se combinan los array del localstore con el array utilizado en el registro local de nuevas cuentas.
