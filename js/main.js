@@ -17,9 +17,9 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
             if ((buscar!=-1)&&(ussers[buscar].passSavee==usserPass)){//comparacion de usuario ingresado con el de la bd.
                 ingresar=true;      //si los datos ingresados coinciden con los guardados, se validará la autentificacion. 
                   //funcion llamada al estar logeado correctamente
-                usuarioActivo==usser[buscar].usserSavee;
-                passUsserActivo=usser[buscar].passSavee;
-                saldoUsserActivousser=usser[buscar].saldo;
+                usuarioActivo=ussers[buscar].usserSavee;
+                passUsserActivo=ussers[buscar].passSavee;
+                saldoUsserActivo=ussers[buscar].saldo;
                 if(document.getElementById("htmlIdMenu").attributes.length<3) { // condicion que encontré para que no se vuelvan a agregar los elemntos al dom
                     logeado();
                     menuLogin();
@@ -123,15 +123,15 @@ function logeado(){
     document.getElementById("idBody").setAttribute("class", "bodySW");
     botonArriba.setAttribute("class", "claseMenu"); //cambio de clase
     botonAbajo.setAttribute("class", "claseDeslogear"); //cambio de clase
-    document.getElementById("idLogear").innerHTML= "MENU" //cambia el texto del boton
-    document.getElementById("idRegistrar").innerHTML= "SALIR"   //cambia el texto del boton
-    if (botonArriba) botonArriba.addEventListener("click",menuPrincipal); //cambia el evento del boton
+    document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
+    document.getElementById("idLogear").style.display= "none"; //cambia el texto del boton
+    document.getElementById("idRegistrar").innerHTML= "SALIR" ;  //cambia el texto del boton
+    // 4 //cambia el evento del boton
     if (botonAbajo) botonAbajo.addEventListener("click",deslogear);
     
 } //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
 
 function menuUsuario(){
-
 }
 
 function menuLogin() {
@@ -159,7 +159,7 @@ function menuLogin() {
 
     //saldo
     const saldo = document.createElement ('li');
-    saldo.innerHTML= "SU SALDO ES $"+datos+" pesos";
+    saldo.innerHTML= "SU SALDO ES $"+saldoUsserActivo+" pesos";
     saldo.setAttribute("id","mostrarSaldo");
     saldo.setAttribute("class","muestraSaldo");
     //boton actualizarsaldo
@@ -170,7 +170,7 @@ function menuLogin() {
 
     //saldo deposito
     const saldoDeposito=document.createElement ('li');
-    saldoDeposito.innerHTML= "SU SALDO ES $"+datos+" pesos";
+    saldoDeposito.innerHTML= "SU SALDO ES $"+saldoUsserActivo+" pesos";
     saldoDeposito.setAttribute("id","saldoDeposito");
     saldoDeposito.setAttribute("class","classSaldoDeposito");
     //deposito input
@@ -214,7 +214,6 @@ function menuLogin() {
 
     ocultarBtn();
 }
-
 
 function ocultarBtn(){
     //funcion que cambia las clases de los botones y les agrega eventos para ocultar/mostrarlos.
@@ -262,6 +261,11 @@ function deslogear(){
     document.getElementById("idRegistrar").innerHTML= "REGISTRAR"
     usuarioActivo="";
     document.getElementById("htmlIdMenu").style.display = 'none';
+    document.getElementById("idLogear").style.display= "block"
+    document.getElementById("title").textContent = "Bienvenido al menu de ingreso";
+    usuarioActivo="";
+    passUsserActivo="";
+    saldoUsserActivo="";
     
 } //esta funcion se habilita al salir del menu, vuelve a poner las clases y los textos como  estaban al principio, para mostrar un menu de logeo nuevmante.
 

@@ -23,13 +23,14 @@
     border: 1px solid #092327;
 }
 
-.body .caja .title {
+.body .caja #title {
     color: #252525;
     font-size: 35px;
     font-weight: 800;
     margin-bottom: 30px;
-}
+    padding: 1%;
 
+}
 
 .body .caja a {
     color: #fff;
@@ -38,6 +39,12 @@
     padding: 10px 15px;
     cursor: pointer;
     font-size: 20px;
+}
+.caja{
+    display: flex;
+    justify-content:space-between ;
+    padding: 1% ;
+    
 }
 
 #volver, ul{
