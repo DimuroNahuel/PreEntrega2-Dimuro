@@ -2,6 +2,8 @@ let datos=12342;
 let ussers=[{usserSavee:"admin",passSavee:"1234", saldo:0}];
 let arrayAux=[];
 usuarioActivo="";
+passUsserActivo="";
+saldoUsserActivo="";
 let ingresar=false;
 
 sacarLocal();
@@ -15,7 +17,9 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
             if ((buscar!=-1)&&(ussers[buscar].passSavee==usserPass)){//comparacion de usuario ingresado con el de la bd.
                 ingresar=true;      //si los datos ingresados coinciden con los guardados, se validará la autentificacion. 
                   //funcion llamada al estar logeado correctamente
-                usuarioActivo=buscar;
+                usuarioActivo==usser[buscar].usserSavee;
+                passUsserActivo=usser[buscar].passSavee;
+                saldoUsserActivousser=usser[buscar].saldo;
                 if(document.getElementById("htmlIdMenu").attributes.length<3) { // condicion que encontré para que no se vuelvan a agregar los elemntos al dom
                     logeado();
                     menuLogin();
@@ -35,7 +39,7 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
 
 }
 
-function menuPrincipal (){
+function menuPrincipal (){ //funcion antigua proximamente borrada, solo mantenida para extraer cosas utiles
     let opcionMenu=prompt("Seleccione opcion: \n 1- Mostrar datos\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver al menu");
     switch(opcionMenu){//menu dentro del login
         case "1": {
@@ -115,6 +119,7 @@ function registro (){//funcion para registrar nuevo usuario.
 }
 
 function logeado(){
+
     document.getElementById("idBody").setAttribute("class", "bodySW");
     botonArriba.setAttribute("class", "claseMenu"); //cambio de clase
     botonAbajo.setAttribute("class", "claseDeslogear"); //cambio de clase
@@ -125,8 +130,12 @@ function logeado(){
     
 } //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
 
+function menuUsuario(){
+
+}
+
 function menuLogin() {
-    
+    //funcion que crea elementos dentro del html luego de logear, a modo de crear un menu para el usuario.
         
     //creacion de elementos de la lista menu
     const menuCajero = document.getElementById("htmlIdMenu");
@@ -203,7 +212,12 @@ function menuLogin() {
     //agregandolo al dom
     extraccion.append(extraerDinero,confirmarExtraccion,extraccionBoton);
 
+    ocultarBtn();
+}
 
+
+function ocultarBtn(){
+    //funcion que cambia las clases de los botones y les agrega eventos para ocultar/mostrarlos.
     let btn_funSaldo = document.getElementById ("idVerSaldo");
     btn_funSaldo.addEventListener("click",funSaldo);
 
@@ -239,9 +253,6 @@ function menuLogin() {
     }
 }
 
-
-
-
 function deslogear(){
     ingresar=false;
     document.getElementById("idBody").setAttribute("class", "body");
@@ -253,12 +264,6 @@ function deslogear(){
     document.getElementById("htmlIdMenu").style.display = 'none';
     
 } //esta funcion se habilita al salir del menu, vuelve a poner las clases y los textos como  estaban al principio, para mostrar un menu de logeo nuevmante.
-
-var botonArriba = document.getElementById("idLogear"); //defino eventos para los botones.
-var botonAbajo = document.getElementById("idRegistrar");
-
-if (botonArriba) botonArriba.addEventListener("click",ingresarUsuario); //evento se ejecuta al presionar el boton.
-if (botonAbajo) botonAbajo.addEventListener("click",registro);
 
 function guardarLocal(arr, arrSave){
     localStorage.setItem(arr,JSON.stringify(arrSave))
@@ -272,10 +277,9 @@ function sacarLocal(){
     guardarLocal("usuarios",ussers);
 } //funcion ejecutada luego del registro, se crea un array auxiliar para tomar valores momentaneamente y de esta manera
 //se combinan los array del localstore con el array utilizado en el registro local de nuevas cuentas.
-    let elementosSaldo = document.getElementById ("mostrarSaldo");
-    let elementosSaldo1 = document.getElementById ("actualizaSaldo");
-function toggleText(){
-    alert("HOLA")
-    elementosSaldo.classList.toggle("show");
-    elementosSaldo1.classList.toggle("show");
-}
+    
+var botonArriba = document.getElementById("idLogear"); //defino eventos para los botones.
+var botonAbajo = document.getElementById("idRegistrar");
+
+if (botonArriba) botonArriba.addEventListener("click",ingresarUsuario); //evento se ejecuta al presionar el boton.
+if (botonAbajo) botonAbajo.addEventListener("click",registro);

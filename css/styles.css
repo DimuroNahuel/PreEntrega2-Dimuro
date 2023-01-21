@@ -68,10 +68,17 @@
     display: block;
 }
 #idVerSaldo, #idTransferir, #idExtraccion, #idDeposito{
-    display: flex;
 
+}
+
+
+ul {    padding: 3%;
+}
+
+li {
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-
+    
 }
