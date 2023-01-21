@@ -1,7 +1,9 @@
-let datos=[];
-let ussers=[{usserSavee:"admin",passSavee:"1234"}];
+let datos=12342;
+let ussers=[{usserSavee:"admin",passSavee:"1234", saldo:0}];
 let arrayAux=[];
+usuarioActivo="";
 let ingresar=false;
+
 sacarLocal();
 
 function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes de dar error.
@@ -12,70 +14,81 @@ function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes d
             let buscar = ussers.findIndex(ussers=>ussers.usserSavee==usser);
             if ((buscar!=-1)&&(ussers[buscar].passSavee==usserPass)){//comparacion de usuario ingresado con el de la bd.
                 ingresar=true;      //si los datos ingresados coinciden con los guardados, se validará la autentificacion. 
-                logeado();  //funcion llamada al estar logeado correctamente
+                  //funcion llamada al estar logeado correctamente
+                usuarioActivo=buscar;
+                if(document.getElementById("htmlIdMenu").attributes.length<3) { // condicion que encontré para que no se vuelvan a agregar los elemntos al dom
+                    logeado();
+                    menuLogin();
+                }
+
+                else {
+                    document.getElementById("htmlIdMenu").style.display = 'block'; //en esta condicion, js reconoce que los elementos se encuentran creados y cambia el display para hacerlos visibles
+                    logeado();
+                }
                 break;
             }
             if (i<1 && ingresar==false) { //si ingresa datos invalidos dará error.
                 document.getElementById("idLogear").innerHTML= "DATOS INVALIDOS, INTENTE NUEVAMENTE"
-            }/
+            }
         }
     }
 
 }
 
 function menuPrincipal (){
-    if(ingresar){
-        let opcionMenu=prompt("Seleccione opcion: \n 1- Mostrar datos\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver al menu");
-        switch(opcionMenu){//menu dentro del login
-            case "1": {
-                alert("Mostrando datos\n "+ datos); 
-                menuPrincipal (); //llama a menu para no solicitarle al usuario que toque el boton en cada error.
-                break;
-            }//muestra los datos almacenados 
-            case "2": {
-                let datoAgregado=prompt("Ingrese dato o digite 0 para dejar de agregar \n DATOS ACTUALES:\n " +datos);
-                while (datoAgregado!=0){//solicita datos y lo agrega al array, mientras no se presione el valor de salida 0, seguirá pidiendo datos.
-                    datos.push(datoAgregado);//agrega dato
-                    datoAgregado=prompt("Ingrese dato o digite 0 para dejar de agregar \n DATOS ACTUALES:\n " +datos);//bucle del while.
-                }
-                menuPrincipal ()//muestra nuevamente el menu.
-                break;
-            }//agrega datos
-            case "3": {
-                let datoBorrar=prompt("Mostrando datos, digite 0 para volver o \n escriba el nombre del dato a borrar: \n" + datos)//solicita el dato a borrar o el numero 0 para volver.
-                if (datoBorrar==0){ //si presiona el 0 vuelve al menu
-                    menuPrincipal ();
-                    break;
-                }
-                let buscador = datos.indexOf(datoBorrar); //valida que el dato a borrar exista en el array.
-                if (buscador!=-1){ //si encuentra el valor, lo borrará, sinó pasará al siguiente if
-                    datos.splice(buscador,1);
-                    menuPrincipal ();
-                }
-                else {
-                    alert("dato invalido"); //si no se encuentra el dato a borrar y tampoco es presionado el 0, dará error.
-                    menuPrincipal ();
-                }
-                break;
+    let opcionMenu=prompt("Seleccione opcion: \n 1- Mostrar datos\n 2- Ingresar datos\n 3- Eliminar datos\n 4- Volver al menu");
+    switch(opcionMenu){//menu dentro del login
+        case "1": {
+            alert("Mostrando datos\n "+ datos); 
+            menuPrincipal (); //llama a menu para no solicitarle al usuario que toque el boton en cada error.
+            break;
+        }//muestra los datos almacenados 
+        case "2": {
+            let datoAgregado=prompt("Ingrese dato o digite 0 para dejar de agregar \n DATOS ACTUALES:\n " +datos);
+            while (datoAgregado!=0){//solicita datos y lo agrega al array, mientras no se presione el valor de salida 0, seguirá pidiendo datos.
+                datos.push(datoAgregado);//agrega dato
+                datoAgregado=prompt("Ingrese dato o digite 0 para dejar de agregar \n DATOS ACTUALES:\n " +datos);//bucle del while.
             }
-            case "": {
-                alert("DEBE INGRESAR UN DATO");//si se presiona aceptar sin introducir datos, tira error.
-                menuPrincipal ();
-                //opcion para volver.
-                break;
-            }
-            case "4": {
-                //opcion para volver.
-                break;
-            }
-            default:{
-                alert("INVALIDO!");//de presionarse otro boton fuera de los definidos, dará error.
+            menuPrincipal ()//muestra nuevamente el menu.
+            break;
+        }//agrega datos
+        case "3": {
+            let datoBorrar=prompt("Mostrando datos, digite 0 para volver o \n escriba el nombre del dato a borrar: \n" + datos)//solicita el dato a borrar o el numero 0 para volver.
+            if (datoBorrar==0){ //si presiona el 0 vuelve al menu
                 menuPrincipal ();
                 break;
             }
+            let buscador = datos.indexOf(datoBorrar); //valida que el dato a borrar exista en el array.
+            if (buscador!=-1){ //si encuentra el valor, lo borrará, sinó pasará al siguiente if
+                datos.splice(buscador,1);
+                menuPrincipal ();
+                break;
+            }
+            else {
+                alert("dato invalido"); //si no se encuentra el dato a borrar y tampoco es presionado el 0, dará error.
+                menuPrincipal ();
+                break;
+            }
+            
+        }
+        case "": {
+            alert("DEBE INGRESAR UN DATO");//si se presiona aceptar sin introducir datos, tira error.
+            menuPrincipal ();
+            //opcion para volver.
+            break;
+        }
+        case "4": {
+            //opcion para volver.
+            break;
+        }
+        default:{
+            alert("INVALIDO!");//de presionarse otro boton fuera de los definidos, dará error.
+            menuPrincipal ();
+            break;
         }
     }
 }
+
 
 function registro (){//funcion para registrar nuevo usuario.
     if (!ingresar){
@@ -102,20 +115,143 @@ function registro (){//funcion para registrar nuevo usuario.
 }
 
 function logeado(){
+    document.getElementById("idBody").setAttribute("class", "bodySW");
     botonArriba.setAttribute("class", "claseMenu"); //cambio de clase
     botonAbajo.setAttribute("class", "claseDeslogear"); //cambio de clase
     document.getElementById("idLogear").innerHTML= "MENU" //cambia el texto del boton
     document.getElementById("idRegistrar").innerHTML= "SALIR"   //cambia el texto del boton
     if (botonArriba) botonArriba.addEventListener("click",menuPrincipal); //cambia el evento del boton
     if (botonAbajo) botonAbajo.addEventListener("click",deslogear);
+    
 } //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
+
+function menuLogin() {
+    
+        
+    //creacion de elementos de la lista menu
+    const menuCajero = document.getElementById("htmlIdMenu");
+    const mostrarSaldo = document.createElement ('ul');
+    const ingreso = document.createElement ('ul');
+    const transferir = document.createElement ('ul');
+    const extraccion = document.createElement ('ul');
+    
+    //texto de lista
+    mostrarSaldo.textContent= "VER SALDO";
+    ingreso.textContent = "DEPOSITAR DINERO";
+    transferir.textContent = "REALIZAR TRANSFERENCIA";
+    extraccion.textContent = "EXTRACCION DE DINERO";
+    //clases de elementos de la lista
+    mostrarSaldo.innerHTML = "<input type='submit' value='VER SALDO' id='idVerSaldo' class='claseVerSaldo'>";
+    ingreso.innerHTML = "<input type='submit' value='DEPOSITO' id='idDeposito' class='claseDeposito'>";
+    transferir.innerHTML = "<input type='submit' value='TRANSFERIR' id='idTransferir' class='claseTransferencia'>";
+    extraccion.innerHTML = "<input type='submit' value='EXTRACCION' id='idExtraccion' class='claseExtraccion'>";
+    //agregandolo al dom
+    menuCajero.append(mostrarSaldo,ingreso,transferir,extraccion);
+
+    //saldo
+    const saldo = document.createElement ('li');
+    saldo.innerHTML= "SU SALDO ES $"+datos+" pesos";
+    saldo.setAttribute("id","mostrarSaldo");
+    saldo.setAttribute("class","muestraSaldo");
+    //boton actualizarsaldo
+    const actualizarSaldo = document.createElement ('li');
+    actualizarSaldo.innerHTML = "<input type='submit' value='Actualizar' id='actualizaSaldo' class='actualizarSaldo'>";
+    //agregandolo al dom
+    mostrarSaldo.append(saldo,actualizarSaldo);
+
+    //saldo deposito
+    const saldoDeposito=document.createElement ('li');
+    saldoDeposito.innerHTML= "SU SALDO ES $"+datos+" pesos";
+    saldoDeposito.setAttribute("id","saldoDeposito");
+    saldoDeposito.setAttribute("class","classSaldoDeposito");
+    //deposito input
+    const depositando = document.createElement ('li');
+    depositando.innerHTML = "<input type='text' name='deposito' id='inputDeposito' placeholder='Ingrese dinero' class='inputDeposito' >";
+    //boton deposito 
+    const enviarDeposito = document.createElement ('li');
+    enviarDeposito.innerHTML = "<input type='submit' value='Depositar' id='btnDeposito' class='btnDeposito'>";
+    //agregandolo al dom
+    ingreso.append(saldoDeposito,depositando,enviarDeposito);
+
+    //transferencia
+    //cbu
+    const cbuTransferencia = document.createElement ('li');
+    cbuTransferencia.innerHTML = "<input type='text' name='cbu' id='cbuTransferencia' placeholder='cbu para enviar' class='cbuTransferencia' >";
+    //monto
+    const montoTransferencia = document.createElement ('li');
+    montoTransferencia.innerHTML = "<input type='text' name='monto' id='montoTransferencia' placeholder='motivo de la transferencia?' class='montoTransferencia'>";
+    //motivo
+    const motivoTransferencia = document.createElement ('li');
+    motivoTransferencia.innerHTML = "<input type='text' name='motivo' id='motivoTransferencia' placeholder='Ingrese dinero a transferir' class='motivoTransferencia'>";
+    //boton transferencia
+    const enviarTransferencia = document.createElement ('li');
+    enviarTransferencia.innerHTML = "<input type='submit' value='Transferir' id='btnTransferir' class='btnTransferir'>";
+
+    //agregandolo al dom
+    transferir.append(cbuTransferencia,montoTransferencia,motivoTransferencia,enviarTransferencia);
+
+    //extraccion
+    //monto
+    const extraerDinero = document.createElement ('li');
+    extraerDinero.innerHTML = "<input type='text' name='extraer' id='extraerDinero' placeholder='Ingrese monto para extraccion' class='ExtraerDinero' >";
+    //confirmacion con contraseña
+    const confirmarExtraccion = document.createElement ('li');
+    confirmarExtraccion.innerHTML = "<input type='text' name='confirmacionNecesaria' id='confirmaPass' placeholder='INGRESE CONTRASEÑA PARA CONFIRMAR' class='confirmaPass'>";
+    //boton extraer
+    const extraccionBoton = document.createElement ('li');
+    extraccionBoton.innerHTML = "<input type='submit' value='Extraer' id='btnExtraer'class='btnExtraer' >";
+    //agregandolo al dom
+    extraccion.append(extraerDinero,confirmarExtraccion,extraccionBoton);
+
+
+    let btn_funSaldo = document.getElementById ("idVerSaldo");
+    btn_funSaldo.addEventListener("click",funSaldo);
+
+    let btn_funDeposito = document.getElementById ("idDeposito");
+    btn_funDeposito.addEventListener("click",funDeposito);
+
+    let btn_funTransferir = document.getElementById ("idTransferir");
+    btn_funTransferir.addEventListener("click",funTransferir);
+
+    let btn_funExtraccion = document.getElementById ("idExtraccion");
+    btn_funExtraccion.addEventListener("click",funExtraccion);
+
+    function funSaldo(){
+        document.getElementById ("mostrarSaldo").classList.toggle("show");
+        document.getElementById ("actualizaSaldo").classList.toggle("show");
+    }
+    function funDeposito(){
+        document.getElementById ("saldoDeposito").classList.toggle("show"); 
+        document.getElementById ("inputDeposito").classList.toggle("show");
+        document.getElementById ("btnDeposito").classList.toggle("show");
+    }
+
+    function funTransferir(){
+        document.getElementById ("cbuTransferencia").classList.toggle("show");
+        document.getElementById ("montoTransferencia").classList.toggle("show");
+        document.getElementById ("motivoTransferencia").classList.toggle("show");
+        document.getElementById ("btnTransferir").classList.toggle("show");
+    }
+    function funExtraccion(){
+        document.getElementById ("extraerDinero").classList.toggle("show");
+        document.getElementById ("confirmaPass").classList.toggle("show");
+        document.getElementById ("btnExtraer").classList.toggle("show");
+    }
+}
+
+
+
 
 function deslogear(){
     ingresar=false;
+    document.getElementById("idBody").setAttribute("class", "body");
     botonArriba.setAttribute("class", "claseIngreso");
     botonAbajo.setAttribute("class", "claseRegistro");
     document.getElementById("idLogear").innerHTML= "LOGEAR"
     document.getElementById("idRegistrar").innerHTML= "REGISTRAR"
+    usuarioActivo="";
+    document.getElementById("htmlIdMenu").style.display = 'none';
+    
 } //esta funcion se habilita al salir del menu, vuelve a poner las clases y los textos como  estaban al principio, para mostrar un menu de logeo nuevmante.
 
 var botonArriba = document.getElementById("idLogear"); //defino eventos para los botones.
@@ -136,3 +272,10 @@ function sacarLocal(){
     guardarLocal("usuarios",ussers);
 } //funcion ejecutada luego del registro, se crea un array auxiliar para tomar valores momentaneamente y de esta manera
 //se combinan los array del localstore con el array utilizado en el registro local de nuevas cuentas.
+    let elementosSaldo = document.getElementById ("mostrarSaldo");
+    let elementosSaldo1 = document.getElementById ("actualizaSaldo");
+function toggleText(){
+    alert("HOLA")
+    elementosSaldo.classList.toggle("show");
+    elementosSaldo1.classList.toggle("show");
+}
