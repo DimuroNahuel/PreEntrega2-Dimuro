@@ -122,6 +122,29 @@ function menuPrincipal (){ //funcion antigua proximamente borrada, solo mantenid
     }
 }
 
+function registroFrom(){
+    let registroUsser= document.getElementById("crearUser").value;
+    let registroPass= document.getElementById("crearPass").value;
+    let confirmarPass= document.getElementById("repitePass").value;
+    let buscar = usserLista.findIndex(usserLista=>usserLista.usserSavee==registroUsser); //valida si el usuario se encuentra o no en el array.
+    if (buscar==-1){//si el nombre de usuario no se encuentra, quiere decir que dispone de el para usarlo como username.   
+        if (registroPass==confirmarPass){
+            alert("registro exitoso");//si la pass y su confirmacion coincide, se acepta el registro.
+            let newUser={usserSavee:registroUsser, passSavee:registroPass};
+            usserLista.push(newUser);//se agrega el usuario registrado al array de usuarios, para poder logear.
+            guardarLocal("usuarios",usserLista);
+        }
+        else {
+            alert("error, las contraseñas no coinciden");
+        }
+    }
+    else {
+        alert("error, usuario en uso");//si el nombre de usuario es encontrado en el array, quiere decir que ya se encuentra en uso y lo avisa.
+    }
+}
+var botonIngreso = document.getElementById("btnRegistrar");
+if(botonIngreso)botonIngreso.addEventListener("click",registroFrom);
+
 function registro (){//funcion para registrar nuevo usuario.
     if (!ingresar){
         sacarLocal();
@@ -157,6 +180,13 @@ function logeado(){
     document.getElementById("ingreseUsuario").setAttribute("class", "formLogin");
     document.getElementById("ingresePass").setAttribute("class", "formLogin");
     document.getElementById("btnIngreso").setAttribute("class", "formLogin");
+
+    document.getElementById("crearUser").setAttribute("class", "formReg");
+    document.getElementById("crearPass").setAttribute("class", "formReg");
+    document.getElementById("repitePass").setAttribute("class", "formReg");
+    document.getElementById("btnRegistrar").setAttribute("class", "formReg");
+    document.getElementById("btnSubmit").setAttribute("class", "formReg");
+
 
     botonArriba.setAttribute("class", "claseMenu");
 
@@ -332,6 +362,7 @@ function registro(){
     document.getElementById ("crearPass").classList.toggle("show");
     document.getElementById ("repitePass").classList.toggle("show");
     document.getElementById ("btnRegistrar").classList.toggle("show");
-    document.getElementById ("btmSubmit").classList.toggle("show");
+    document.getElementById ("btnSubmit").classList.toggle("show");
 
 }
+
