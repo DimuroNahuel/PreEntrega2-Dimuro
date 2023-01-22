@@ -1,12 +1,41 @@
 let datos=12342;
-let ussers=[{usserSavee:"admin",passSavee:"1234", saldo:0}];
+let usserLista=[{usserSavee:"admin",passSavee:"1234", saldo:0}];
 let arrayAux=[];
 usuarioActivo="";
 passUsserActivo="";
 saldoUsserActivo="";
 let ingresar=false;
-
 sacarLocal();
+
+function ingresoForm(){
+    let usser = document.getElementById("ingreseUsuario");
+    let usserPass = document.getElementById("ingresePass");
+    let buscar = usserLista.findIndex(usserLista=>usserLista.usserSavee==usser.value);
+    if ((buscar!=-1)&&(usserLista[buscar].passSavee==usserPass.value)){//comparacion de usuario ingresado con el de la bd.
+        ingresar=true;      //si los datos ingresados coinciden con los guardados, se validará la autentificacion. 
+            //funcion llamada al estar logeado correctamente
+        usuarioActivo=usserLista[buscar].usserSavee;
+        passUsserActivo=usserLista[buscar].passSavee;
+        saldoUsserActivo=usserLista[buscar].saldo;
+        if(document.getElementById("htmlIdMenu").attributes.length<3) { // condicion que encontré para que no se vuelvan a agregar los elemntos al dom
+            logeado();
+            menuLogin();
+        }
+
+        else {
+            document.getElementById("htmlIdMenu").style.display = 'block'; //en esta condicion, js reconoce que los elementos se encuentran creados y cambia el display para hacerlos visibles
+            logeado();
+        }
+    }
+    if (ingresar==false&& botonIngreso) { //si ingresa datos invalidos dará error.
+        alert("INTENTE NUEVAMENTE");
+    }
+    usser.reset();
+    usserPass.reset();
+}
+var botonIngreso = document.getElementById("btnIngreso");
+if(botonIngreso)botonIngreso.addEventListener("click",ingresoForm);
+
 
 function ingresarUsuario(){ //funcion para logear, 3 intentos permitidos antes de dar error.
     if (!ingresar){
@@ -93,7 +122,6 @@ function menuPrincipal (){ //funcion antigua proximamente borrada, solo mantenid
     }
 }
 
-
 function registro (){//funcion para registrar nuevo usuario.
     if (!ingresar){
         sacarLocal();
@@ -126,13 +154,16 @@ function logeado(){
     document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
     document.getElementById("idLogear").style.display= "none"; //cambia el texto del boton
     document.getElementById("idRegistrar").innerHTML= "SALIR" ;  //cambia el texto del boton
+    document.getElementById("ingreseUsuario").setAttribute("class", "formLogin");
+    document.getElementById("ingresePass").setAttribute("class", "formLogin");
+    document.getElementById("btnIngreso").setAttribute("class", "formLogin");
+
+    botonArriba.setAttribute("class", "claseMenu");
+
     // 4 //cambia el evento del boton
     if (botonAbajo) botonAbajo.addEventListener("click",deslogear);
     
 } //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
-
-function menuUsuario(){
-}
 
 function menuLogin() {
     //funcion que crea elementos dentro del html luego de logear, a modo de crear un menu para el usuario.
@@ -150,10 +181,10 @@ function menuLogin() {
     transferir.textContent = "REALIZAR TRANSFERENCIA";
     extraccion.textContent = "EXTRACCION DE DINERO";
     //clases de elementos de la lista
-    mostrarSaldo.innerHTML = "<input type='submit' value='VER SALDO' id='idVerSaldo' class='claseVerSaldo'>";
-    ingreso.innerHTML = "<input type='submit' value='DEPOSITO' id='idDeposito' class='claseDeposito'>";
-    transferir.innerHTML = "<input type='submit' value='TRANSFERIR' id='idTransferir' class='claseTransferencia'>";
-    extraccion.innerHTML = "<input type='submit' value='EXTRACCION' id='idExtraccion' class='claseExtraccion'>";
+    mostrarSaldo.innerHTML = "<input type='submit' value='VER SALDO' id='idVerSaldo' class='claseVerSaldo menuDesp'>";
+    ingreso.innerHTML = "<input type='submit' value='DEPOSITO' id='idDeposito' class='claseDeposito menuDesp'>";
+    transferir.innerHTML = "<input type='submit' value='TRANSFERIR' id='idTransferir' class='claseTransferencia menuDesp'>";
+    extraccion.innerHTML = "<input type='submit' value='EXTRACCION' id='idExtraccion' class='claseExtraccion menuDesp'>";
     //agregandolo al dom
     menuCajero.append(mostrarSaldo,ingreso,transferir,extraccion);
 
@@ -272,18 +303,35 @@ function deslogear(){
 function guardarLocal(arr, arrSave){
     localStorage.setItem(arr,JSON.stringify(arrSave))
 }; // funcion para guardar los usuarios registrados en el localstore
+
 function sacarLocal(){
     arrayAux=localStorage.getItem("usuarios");
-    for (x=ussers.length; x<=0;x--){
+    for (x=usserLista.length; x<=0;x--){
         x.push(arrayAux);
-        ussers=arrayAux;
+        usserLista=arrayAux;
     }
-    guardarLocal("usuarios",ussers);
+    guardarLocal("usuarios",usserLista);
 } //funcion ejecutada luego del registro, se crea un array auxiliar para tomar valores momentaneamente y de esta manera
 //se combinan los array del localstore con el array utilizado en el registro local de nuevas cuentas.
     
 var botonArriba = document.getElementById("idLogear"); //defino eventos para los botones.
 var botonAbajo = document.getElementById("idRegistrar");
 
-if (botonArriba) botonArriba.addEventListener("click",ingresarUsuario); //evento se ejecuta al presionar el boton.
+if (botonArriba) botonArriba.addEventListener("click",logeo); //evento se ejecuta al presionar el boton.
 if (botonAbajo) botonAbajo.addEventListener("click",registro);
+
+function logeo(){
+    document.getElementById ("ingreseUsuario").classList.toggle("show");
+    document.getElementById ("ingresePass").classList.toggle("show");
+    document.getElementById ("btnIngreso").classList.toggle("show");
+
+}
+
+function registro(){
+    document.getElementById ("crearUser").classList.toggle("show");
+    document.getElementById ("crearPass").classList.toggle("show");
+    document.getElementById ("repitePass").classList.toggle("show");
+    document.getElementById ("btnRegistrar").classList.toggle("show");
+    document.getElementById ("btmSubmit").classList.toggle("show");
+
+}
