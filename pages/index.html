@@ -9,29 +9,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body id="idBody" class="body">
-    <div action="nav" id="barraNav" class="caja">
-        <h1 id="title">Menu de ingreso</h1>
-        
-        <a id="idLogear" class="claseIngreso">Ingresar</a>
-        <ul class="menuDesplegable">
-            <li> <input type='text' name='usuario' id='ingreseUsuario' placeholder='Ingrese nombre de usuario' class='ingreseUsuario formLogin' ></li>
-            <li><input type='text' name='contraseña' id='ingresePass' placeholder='Ingrese contraseña' class='ingresePass formLogin' ></li>
-            <li><input type='submit' value='INGRESAR' id='btnIngreso' class='btnIngreso formLogin'></li>
+    <div class="TODO">
+        <div action="nav" id="barraNav" class="caja">
+            <h1 id="title">Menu de ingreso</h1>
+            
+            <a id="idLogear" class="claseIngreso">Ingresar</a>
+            <ul class="menuDesplegable">
+                <li> <input type='text' name='usuario' id='ingreseUsuario' placeholder='Ingrese nombre de usuario' class='ingreseUsuario formLogin' ></li>
+                <li><input type='text' name='contraseña' id='ingresePass' placeholder='Ingrese contraseña' class='ingresePass formLogin' ></li>
+                <li><input type='submit' value='INGRESAR' id='btnIngreso' class='btnIngreso formLogin'></li>
 
-        </ul>
-        <a id="idRegistrar" class="claseRegistro">Registrarse</a>
-        <ul class="menuDesplegable">
-            <li><input type='text' name='crearUser' id='crearUser' placeholder='Ingrese nombre de usuario' class='crearUser formReg' ></li>
-            <li><input type='text' name='crearPass' id='crearPass' placeholder='Ingrese su nueva contraseña' class='crearPass formReg' ></li>
-            <li><input type='text' name='repitePass' id='repitePass' placeholder='Repita su contraseña' class='repitePass formReg' ></li>
-            <li><input type='submit' value='REGISTRARSE' id='btnRegistrar' class='btnRegistrar formReg'></li>
-            <li><input type='submit' value='SUBMIT' id='btnSubmit' class='btnSubmit formReg'></li>
-        </ul>
+            </ul>
+            <a id="idRegistrar" class="claseRegistro">Registrarse</a>
+            <ul class="menuDesplegable">
+                <li><input type='text' name='crearUser' id='crearUser' placeholder='Ingrese nombre de usuario' class='crearUser formReg' ></li>
+                <li><input type='text' name='crearPass' id='crearPass' placeholder='Ingrese su nueva contraseña' class='crearPass formReg' ></li>
+                <li><input type='text' name='repitePass' id='repitePass' placeholder='Repita su contraseña' class='repitePass formReg' ></li>
+                <li><input type='submit' value='REGISTRARSE' id='btnRegistrar' class='btnRegistrar formReg'></li>
+                <li><input type='submit' value='SUBMIT' id='btnSubmit' class='btnSubmit formReg'></li>
+            </ul>
+            <input type='submit' value='SALIR' id='btnSALIR' class='btnSALIR'>
+
+            <ul id="menuLogeado" class="menuLogeado">
+                <li>
+                    <input type='submit' value='VER SALDO' id='idVerSaldo' class='claseVerSaldo menuDesp'>
+                    <P id="mostrarSaldo" class="muestraSaldo"> " " </P>
+                    <input type='submit' value='Actualizar' id='actualizaSaldo' class='actualizarSaldo'>
+                </li>
+                <li>
+                    <input type='submit' value='DEPOSITO' id='idDeposito' class='claseDeposito menuDesp'>
+                    <P id="saldoDeposito" class="classSaldoDeposito"> " " </P>
+                    <input type='text' name='deposito' id='inputDeposito' placeholder='Ingrese dinero' class='inputDeposito' >
+                    <input type='submit' value='Depositar' id='btnDeposito' class='btnDeposito'>
+                </li>
+                <li>
+                    <P id="saldoTransferir" class="saldoTransferir"> " " </P>
+                    <input type='submit' value='TRANSFERIR' id='idTransferir' class='claseTransferencia menuDesp'>
+                    <input type='number' name='cbu' id='cbuTransferencia' placeholder='cbu para enviar' class='cbuTransferencia' >
+                    <input type='number' name='monto' id='montoTransferencia' placeholder='motivo de la transferencia?' class='montoTransferencia'>
+                    <input type='text' name='motivo' id='motivoTransferencia' placeholder='Ingrese dinero a transferir' class='motivoTransferencia'>
+                    <input type='submit' value='Transferir' id='btnTransferir' class='btnTransferir'>
+                </li>
+                <li>
+                    <P id="saldoExtraccion" class="saldoExtraccion"> " " </P>
+                    <input type='submit' value='EXTRACCION' id='idExtraccion' class='claseExtraccion menuDesp'>
+                    <input type='number' name='extraer' id='extraerDinero' placeholder='Ingrese monto para extraccion' class='ExtraerDinero' >
+                    <input type='text' name='confirmacionNecesaria' id='confirmaPass' placeholder='INGRESE CONTRASEÑA PARA CONFIRMAR' class='confirmaPass'>
+                    <input type='submit' value='Extraer' id='btnExtraer'class='btnExtraer'>
+                </li>
+            </ul>
+        </div>
+        <div id="htmlIdMenu" class="claseCajero">
+        </div>
     </div>
-    <div id="htmlIdMenu" class="claseCajero">
-    </div>
-    
     <script src="../js/main.js"></script>
     <script src="jquery-3.6.1.min.js"></script>
 </body>
 </html>
+
