@@ -29,6 +29,13 @@ function inicio (){
         registroFrom();
         }
     );
+
+    let btnSubmit = document.getElementById("btnSubmit");
+    if(btnSubmit)btnSubmit.addEventListener("click",()=>{
+        document.getElementById("crearUser").value="";
+        document.getElementById("crearPass").value="";
+        document.getElementById("repitePass").value="";
+    })
 }
 
 function ingresoForm(){
@@ -245,9 +252,7 @@ function logeado(){
         document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
     });
 
-
-
-
+    
 } //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
 
 function menuLogin() {

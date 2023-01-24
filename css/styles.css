@@ -15,7 +15,7 @@
 
 }
 
-.body .caja{
+.body{
     /* display: flex;
     flex-direction: column;
     text-align: center; */
@@ -26,7 +26,7 @@
     border: 1px solid #092327; 
 }
 
-.body .caja #title, .menuDesp {
+.body  #title, .menuDesp {
     color: #252525;
     font-size: 35px;
     font-weight: 800;
@@ -44,23 +44,25 @@
 
 } */
 
-.body .caja a, .bodySW{
+.caja a, .bodySW{
     color: #fff;
     background: linear-gradient(to right, #cb232c, #ce1d61);
-    padding: 3% 25%;
+    padding: 1% 15%;
     cursor: pointer;
     font-size: 20px;
     border: 1px solid #092327;
 }
 .caja{
-    /* display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content:space-between ; */
-    border: 1px solid #092327;
     text-align: center;
+    justify-content: center;
+    padding: 1% 22%;
+    border: 1px solid #092327;
     border-radius: .5rem;
-    padding: 0% 20%;
 }
+
+
 
 .menuDesp{
     border-radius: .5rem;  
@@ -109,6 +111,18 @@
     display: block;
 }
 
-ul{    padding: 5%;
+ul {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
 }
 
+li {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+}
+ .formReg, .formLogin{
+    text-align: center;
+    padding: 1% 10%;
+ }
