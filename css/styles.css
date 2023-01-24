@@ -5,49 +5,22 @@
     font-family: sans-serif;
 }
 
-.body{
+.body, .bodySW{
     /* display: flex;
     align-items: center;
     justify-content: center; */
     min-height: 100vh;
-    background: linear-gradient(to right, #cb232c, #ce1d61);
     flex-wrap: nowrap;
-
-}
-
-.body{
-    /* display: flex;
-    flex-direction: column;
-    text-align: center; */
-
-    background: #fff;
+    background: rgb(250, 192, 192);
     padding: 20px 25px;
     box-shadow: 0 5px 10px rgba(71, 3, 6, 0.7);
-    border: 1px solid #092327; 
+    border: 1px solid #092327;
 }
-
-.body  #title, .menuDesp {
-    color: #252525;
-    font-size: 35px;
-    font-weight: 800;
-    margin-bottom: 30px;
-    padding: 1%;
-}
-
-/* .formLogin, .formReg{
-    color: #252525;
-    font-size: 15px;
-    font-weight: 800;
-    margin-bottom: 30px;
-    padding: 1%;
-    border: 1px solid #092327; 
-
-} */
 
 .caja a, .bodySW{
     color: #fff;
-    background: linear-gradient(to right, #cb232c, #ce1d61);
     padding: 1% 15%;
+    background: rgb(250, 192, 192);;
     cursor: pointer;
     font-size: 20px;
     border: 1px solid #092327;
@@ -61,7 +34,10 @@
     border: 1px solid #092327;
     border-radius: .5rem;
 }
-
+/* .TODO{
+background-image: url(../image/atm.png) ;
+    background-repeat: no-repeat;
+    background-position: center;} */
 
 
 .menuDesp{
@@ -73,11 +49,7 @@
     list-style-type: none;
 }
 
-.bodySW #barraNav{
-        background:rgba(228, 228, 228, 0.562); 
-        height: 80px;
-        width: 100%;    
-}
+
 
 #htmlIdMenu, ul{
     box-shadow: none;
@@ -119,10 +91,75 @@ ul {
 
 li {
     display: flex;
+    text-align: center;
+    align-items: center;
     flex-direction: column;
     padding: 2%;
 }
+input{
+    text-align: center;
+    padding: 2%;
+    margin: 2%;
+
+}
+
+
  .formReg, .formLogin{
     text-align: center;
     padding: 1% 10%;
  }
+
+ .cajaLoged{
+    display: flex;
+    flex-direction: column;
+    padding: 1% 10%;
+    text-align: center;
+    
+ }
+
+ .menuLogeado{
+    padding: 10% 20%;
+ }
+
+ #idVerSaldo, #idDeposito, #idTransferir, #idExtraccion, #btnSALIR, #idLogear, #idRegistrar
+  {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    border-radius: 20px;
+    border: 2px solid #fff;
+    background: #495057;
+  }
+
+  #actualizaSaldo, #btnDeposito, #btnTransferir, #btnExtraer, #btnSubmit, #btnRegistrar, #btnIngreso{
+    min-width: 130px;
+    height: 40px;
+    color: #495057;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    border-radius: 20px;
+    border: 2px solid #495057;
+    
+  }
+
+  #ingreseUsuario, #ingresePass, #crearUser, #crearPass, #repitePass
+  {width: 40%;}
+
+  .menuLogeado{
+    top: -100px;
+    position: relative;
+  }
+
+  #title{
+    color: #495057;
+  }
+
+ 

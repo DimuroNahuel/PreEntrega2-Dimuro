@@ -204,6 +204,8 @@ function registroFrom(){
 // }
 
 function logeado(){
+    
+    document.getElementById("barraNav").setAttribute("class","cajaLoged");
 
     document.getElementById("idBody").setAttribute("class","bodySW");
     document.getElementById("idLogear").setAttribute("class","oculto"); //cambio de clase
@@ -338,6 +340,8 @@ function deslogear(){
     document.getElementById("confirmaPass").setAttribute("class","oculto");
     document.getElementById("btnExtraer").setAttribute("class","oculto");
 
+    document.getElementById("barraNav").setAttribute("class","caja");
+
     
     
 
@@ -391,11 +395,11 @@ function extraccion(){
     if(document.getElementById("extraerDinero").value!="" || document.getElementById("confirmaPass").value!=""){
         if (document.getElementById("confirmaPass").value==passUsserActivo) {
             if (document.getElementById("extraerDinero").value<saldoUsserActivo && document.getElementById("extraerDinero").value>0) {     
-                let saldoAux = document.getElementById("extraerDinero");
+                let saldoAux = document.getElementById("extraerDinero").value;
                 saldoAux=parseInt(saldoAux,10);
                 console.log("SALDO ANTERIOR= "+saldoUsserActivo);
-                console.log("SALDO INGRESADO= "+saldoAux.value);
-                saldoUsserActivo=saldoUsserActivo-saldoAux.value;
+                console.log("SALDO INGRESADO= "+saldoAux);
+                saldoUsserActivo=saldoUsserActivo-saldoAux;
                 console.log("SALDO TOTAL= "+saldoUsserActivo);
                 document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
                 document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
