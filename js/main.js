@@ -236,6 +236,10 @@ function logeado(){
     let btnSALIR = document.getElementById ("btnSALIR");
     if(btnSALIR)btnSALIR.addEventListener("click",deslogear);
 
+    let btnTransferir = document.getElementById ("btnTransferir");
+    if(btnTransferir)btnTransferir.addEventListener("click",transferir);
+    
+
     let actualizaSaldo = document.getElementById("actualizaSaldo");
     if(actualizaSaldo)actualizaSaldo.addEventListener("click",()=>{
         document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
@@ -382,10 +386,11 @@ function extraccion(){
     if(document.getElementById("extraerDinero").value!="" || document.getElementById("confirmaPass").value!=""){
         if (document.getElementById("confirmaPass").value==passUsserActivo) {
             if (document.getElementById("extraerDinero").value<saldoUsserActivo && document.getElementById("extraerDinero").value>0) {     
-                const saldoAux = document.getElementById("extraerDinero");
+                let saldoAux = document.getElementById("extraerDinero");
+                saldoAux=parseInt(saldoAux,10);
                 console.log("SALDO ANTERIOR= "+saldoUsserActivo);
-                console.log("SALDO INGRESADO= "+parseInt(saldoAux.value,10));
-                saldoUsserActivo=saldoUsserActivo-parseInt(saldoAux.value,10);
+                console.log("SALDO INGRESADO= "+saldoAux.value);
+                saldoUsserActivo=saldoUsserActivo-saldoAux.value;
                 console.log("SALDO TOTAL= "+saldoUsserActivo);
                 document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
                 document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
@@ -406,4 +411,28 @@ function extraccion(){
     else{
         alert("CAMPO VACIO");
     }
+}
+
+function transferir(){
+    let cbu = document.getElementById("cbuTransferencia").value;
+    let buscar = usserLista.findIndex(usserLista=>usserLista.usserSavee==cbu); //valida si el usuario se encuentra o no en el array.
+    console.log(buscar);
+        if (buscar!=-1){
+            if(document.getElementById("montoTransferencia").value<saldoUsserActivo && document.getElementById("montoTransferencia").value>0){
+                let saldoAux = document.getElementById("montoTransferencia").value;
+                saldoAux=parseInt(saldoAux,10);
+                usserLista[buscar].saldo=+saldoAux;
+                saldoUsserActivo=saldoUsserActivo-saldoAux;
+                usserLista[indiceUser].saldo=saldoUsserActivo;
+                guardarLocal("usuarios",usserLista);
+                document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
+                document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
+                document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
+                document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
+                document.getElementById("cbuTransferencia").value="";
+                document.getElementById("montoTransferencia").value="";
+                document.getElementById("motivoTransferencia").value="";     
+            }
+            else{alert("user no encontrado");}
+        }
 }
