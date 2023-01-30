@@ -56,7 +56,7 @@ background-image: url(../image/atm.png) ;
     border: none;
     background: none;
 }
-.saldoTransferir,
+/* .saldoTransferir,
 .saldoExtraccion,
 .muestraSaldo,
 .actualizarSaldo, 
@@ -77,11 +77,11 @@ background-image: url(../image/atm.png) ;
 .oculto
 {
     display: none;
-}
+} */
 
-.show{
+/* .show{
     display: block;
-}
+} */
 
 ul {
     display: flex;
