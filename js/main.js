@@ -9,6 +9,8 @@ let ingresar=false;
 let dispBlock="block";
 let dispNone="none";
 let dispFlex="flex";
+let fechaDolar="";
+let precioDolar=0;
 
 
 let saldoMostrar=["mostrarSaldo","actualizaSaldo"];
@@ -20,13 +22,83 @@ let listaOcultarLog=["ingreseUsuario","ingresePass","btnIngreso","crearUser","cr
 let menuDesplegable=["menuDesplegable0","menuDesplegable1"];
 let menuLogeado=["menuLogeado"];
 
+//DESLOGEO
+    let listaMostrar=["idLogear","idRegistrar"];
+    let listaOcultar =["saldoDeposito","mostrarSaldo","ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit","btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","actualizaSaldo","inputDeposito","btnDeposito","saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir","saldoExtraccion","extraerDinero","confirmaPass","btnExtraer"];
+    let reinicioInput =["ingreseUsuario","ingresePass"]
+//DESLOGEO
+
 let listaInicio=[];
 listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,menuLogeado,listaMostrarLog,listaOcultarLog);
 cambioDisplay(listaInicio,dispNone);
 listaOcultarLog.unshift("idLogear","idRegistrar");
 
-
+Swal.fire(
+    'Bienvenido a nuestro sistema ATM',
+    'realice depositos, transferencias a los demas usuarios y hasta extracciones en un solo lugar',
+  )
 inicio ();
+
+//BOTONES PARA EL MENU LUEGO DEL LOGEO, CON EL MENU DESPLEGADO.
+let btnDepositar = document.getElementById("btnDeposito");
+if(btnDepositar){btnDepositar.addEventListener("click",deposito);
+}
+let extraerDinero = document.getElementById("btnExtraer");
+if(extraerDinero){extraerDinero.addEventListener("click",extraccion);
+}
+let btnTransferir = document.getElementById ("btnTransferir");
+if(btnTransferir){btnTransferir.addEventListener("click",transferir);
+}
+let actualizaSaldo = document.getElementById("actualizaSaldo");
+if(actualizaSaldo){actualizaSaldo.addEventListener("click",funActSaldo);  
+}
+let btnSALIR = document.getElementById ("btnSALIR");
+if(btnSALIR){btnSALIR.addEventListener("click",()=>{
+    document.getElementById("title").textContent = "Bienvenido ";
+    cambioDisplay(listaOcultar,dispNone);
+    cambioDisplay(menuLogeado,dispNone);
+
+    cambioDisplay(listaMostrar,dispBlock);
+    cambioDisplay(menuDesplegable,dispFlex); 
+
+    reiniciandoInput(reinicioInput);
+    //limpiando los input.
+    usuarioActivo,passUsserActivo="";
+    saldoUsserActivo=0;
+    Swal.fire(
+        '¡Saliendo...!',
+        'Gracias por utilizar nuestro sistema',
+        'success')
+});
+}
+//BOTONES PARA EL MENU LUEGO DEL LOGEO, CON EL MENU DESPLEGADO.
+
+
+
+
+//SWITCH PARA MENUS DENTRO DEL LOGEO
+let btn_funSaldo = document.getElementById ("idVerSaldo");
+if(btn_funSaldo)btn_funSaldo.addEventListener("click",()=>{
+    switchOcutar(saldoMostrar);
+});//llamo a funcion con parametros que realiza el cambio de clases, en ella se llama el array que cambiará su clase segun se presione su respectivo boton.
+
+let btn_funDeposito = document.getElementById ("idDeposito");
+if(btn_funDeposito)btn_funDeposito.addEventListener("click",()=>{
+    switchOcutar(depositoMostrar);
+});   
+
+let btn_funTransferir = document.getElementById ("idTransferir");
+if(btn_funTransferir)btn_funTransferir.addEventListener("click",()=>{
+    switchOcutar(transferirMostrar);
+});
+
+let btn_funExtraccion = document.getElementById ("idExtraccion");
+if(btn_funExtraccion)btn_funExtraccion.addEventListener("click",()=>{
+    switchOcutar(extraerMostrar);
+});
+//SWITCH PARA MENUS DENTRO DEL LOGEO
+
+
 
 function inicio (){
     usserLista=JSON.parse(localStorage.getItem("usuarios"));
@@ -70,7 +142,15 @@ function ingresoForm(){
             usuarioActivo=usserLista[buscar].usserSavee;
             passUsserActivo=usserLista[buscar].passSavee;
             saldoUsserActivo=usserLista[buscar].saldo;
-            logeado();
+
+            document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
+            funActSaldo();
+            cambioDisplay(listaOcultarLog,dispNone);  
+            cambioDisplay(menuDesplegable,dispNone)
+
+            cambioDisplay(listaMostrarLog,dispBlock);
+            cambioDisplay(menuLogeado,dispFlex)
+            
             
         }
         if (ingresar==false&& botonIngreso) { //si ingresa datos invalidos dará error.
@@ -129,81 +209,6 @@ function registroFrom(){
     }
     );
 }
-
-function logeado(){
-    if (ingresar==true){
-        document.getElementById("barraNav").setAttribute("class","cajaLoged");
-        document.getElementById("idBody").setAttribute("class","bodySW");
-        document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
-        //cambio clases de variables para mostrar/ocultar
-        funActSaldo();
-        cambioDisplay(listaOcultarLog,dispNone);      
-        cambioDisplay(listaMostrarLog,dispBlock);
-        cambioDisplay(menuDesplegable,dispNone)
-        cambioDisplay(menuLogeado,dispFlex)
-
-
-        //estos son arrays que contienen las id de los elementos que cambiaran su visibilidad al recibir click en un determinado boton.
-        let btn_funSaldo = document.getElementById ("idVerSaldo");
-        if(btn_funSaldo)btn_funSaldo.addEventListener("click",()=>{switchOcutar(saldoMostrar)});//llamo a funcion con parametros que realiza el cambio de clases, en ella se llama el array que cambiará su clase segun se presione su respectivo boton.
-        let btn_funDeposito = document.getElementById ("idDeposito");
-        if(btn_funDeposito)btn_funDeposito.addEventListener("click",()=>{switchOcutar(depositoMostrar)});   
-        let btn_funTransferir = document.getElementById ("idTransferir");
-        if(btn_funTransferir)btn_funTransferir.addEventListener("click",()=>{switchOcutar(transferirMostrar)});
-        let btn_funExtraccion = document.getElementById ("idExtraccion");
-        if(btn_funExtraccion)btn_funExtraccion.addEventListener("click",()=>{switchOcutar(extraerMostrar)});
-
-        // 4 //cambia el evento del boton
-        // if (botonAbajo) botonAbajo.addEventListener("click",deslogear);
-        let btnDepositar = document.getElementById("btnDeposito");
-        if(btnDepositar){btnDepositar.addEventListener("click",deposito);
-        }
-        let extraerDinero = document.getElementById("btnExtraer");
-        if(extraerDinero){extraerDinero.addEventListener("click",extraccion);
-        }
-        let btnSALIR = document.getElementById ("btnSALIR");
-        if(btnSALIR){btnSALIR.addEventListener("click",deslogear);
-        }
-        let btnTransferir = document.getElementById ("btnTransferir");
-        if(btnTransferir){btnTransferir.addEventListener("click",transferir);
-        }
-        let actualizaSaldo = document.getElementById("actualizaSaldo");
-        if(actualizaSaldo){actualizaSaldo.addEventListener("click",funActSaldo);
-        }
-    }
-} //esta es una funcion se llama al logearse, cambia la class de los botones, haciendo que estos tengan otra funcion al estar logeado en el sistema
-
-function ocultarBtn(){
-    if (ingresar==true){
-        //funcion que cambia las clases de los botones y les agrega eventos para ocultar/mostrarlos.
-        
-}
-}
-function deslogear(){
-    if (ingresar==true){
-        document.getElementById("idBody").setAttribute("class", "body"); //cambio de clases a objetos para ocultar / mostrar
-        document.getElementById("barraNav").setAttribute("class","caja");
-        document.getElementById("title").textContent = "Bienvenido ";
-
-        let listaMostrar=["idLogear","idRegistrar"];
-        let listaOcultar =["saldoDeposito","mostrarSaldo","ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit","btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","actualizaSaldo","inputDeposito","btnDeposito","saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir","saldoExtraccion","extraerDinero","confirmaPass","btnExtraer"];
-        let reinicioInput =["ingreseUsuario","ingresePass"]
-        //array que cambiará su clase para mostrar/ocultarse
-        cambioDisplay(listaOcultar,dispNone);
-        cambioDisplay(listaMostrar,dispBlock);
-        cambioDisplay(menuDesplegable,dispFlex);  
-        cambioDisplay(menuLogeado,dispNone)
-        reiniciandoInput(reinicioInput);
-        //limpiando los input.
-        usuarioActivo,passUsserActivo="";
-        saldoUsserActivo=0;
-        Swal.fire(
-            '¡Saliendo...!',
-            'Gracias por utilizar nuestro sistema',
-            'success')
-
-    }
-} //esta funcion se habilita al salir del menu, vuelve a poner las clases y los textos como  estaban al principio, para mostrar un menu de logeo nuevmante.
 
 function guardarLocal(){
     localStorage.setItem("usuarios",JSON.stringify(usserLista));
@@ -281,18 +286,18 @@ function transferir(){
     let cbu = document.getElementById("cbuTransferencia").value;
     let buscar = usserLista.findIndex(usserLista=>usserLista.usserSavee==cbu); //valida si el usuario se encuentra o no en el array.
     console.log(buscar);
-        if (buscar!=-1){
-            if(document.getElementById("montoTransferencia").value<saldoUsserActivo && document.getElementById("montoTransferencia").value>0){
-                //conjunto de if para validar que se pueda realar o no la extraccion.
+        if (buscar!=-1 && usuarioActivo!=cbu){
+            if(document.getElementById("montoTransferencia").value<=saldoUsserActivo && document.getElementById("montoTransferencia").value>0){
+                //conjunto de if para validar que se pueda realar o no la transferencia.
                 let saldoAux = document.getElementById("montoTransferencia").value;
                 saldoAux=parseInt(saldoAux,10);//se parsea el saldo para tener su valor
-                usserLista[buscar].saldo=+saldoAux;
+                usserLista[buscar].saldo=usserLista[buscar].saldo+saldoAux;
                 saldoUsserActivo=saldoUsserActivo-saldoAux;
                 usserLista[indiceUser].saldo=saldoUsserActivo;
                 //operaciones para el cambio de saldos entre los ussers
                 guardarLocal(); //funcion que guarda cambios en el localstorage
                 funActSaldo(); //funcion que actualiza el saldo
-                let reinicioInput =["cbuTransferencia","montoTransferencia","motivoTransferencia"]
+                let reinicioInput =["cbuTransferencia","montoTransferencia","motivoTransferencia"];
                 reiniciandoInput(reinicioInput);
                 //limpio los valores de los input.
                 Swal.fire(
@@ -307,6 +312,12 @@ function transferir(){
                     'error')
             }
         }
+        else{
+            Swal.fire(
+                '¡Hubo un problema!',
+                'Imposible auto enviarse dinero',
+                'error')
+    }
 }
 
 function funActSaldo(){
@@ -316,6 +327,7 @@ function funActSaldo(){
     document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
 }//funcion que se utiliza para actualizar el saldo mostrado en pantalla luego de una operacion o al presionar los botones "actualizar saldo"
 function cambioDisplay(lista,display){
+    console.log("---------------------------------------------->");
     for (let x=0; x<lista.length;x++ ){
         document.getElementById(lista[x]).style.display = display;
         console.log("nuevo display "+ display+ " de " +lista[x]);
@@ -329,15 +341,45 @@ function cambioDisplay(lista,display){
 
         }
     function switchOcutar(lista){
+        console.log("---------------------------------------------->");
         for (let x=0; x<lista.length;x++ ){
-            if (document.getElementById(lista[x]).style.display == 'none'){
-                document.getElementById(lista[x]).style.display = 'block';
+            let elemento=document.getElementById(lista[x]);
+            if (elemento.style.display == 'none'){
+                elemento.style.display = 'block';
             }
             else{
-                document.getElementById(lista[x]).style.display = 'none';
+                elemento.style.display = 'none';
             }
-            console.log("nuevo display none de "+lista[x]);
-        }
-    }
+            console.log("nuevo display "+elemento.style.display+" de "+lista[x]);
 
+        }//funcion utilizada para negar el estado de cada elemento del array, los estados son none o block
+    }
     
+    fetch("https://api.estadisticasbcra.com/usd_of",{
+        headers:{
+            Authorization: "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDY3MjQzNDEsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJuYWh1ZWwuZGltdXJvQGhvdG1haWwuY29tIn0.KWt6PevIQz_-VMqyMd9Os8b3NfffRlVtkGiGWuW0zmJRspMjL_0mS8pDHAGLjG0O3AadPMB4BKFJiaw6Cl8l_A",
+        },
+    })
+    .then((response)=> response.json())
+    .then((data)=>{
+        console.log(data[data.length-1]);
+        let dataBank = document.getElementById("dolar");
+        fechaDolar=data[data.length-1].d;
+        precioDolar=data[data.length-1].v;
+
+        let fechaText = document.createElement("li");
+        fechaText.innerHTML= "COTIZ. DOLAR CON FECHA:"
+        fechaText.setAttribute("class","item-0")
+        let fecha = document.createElement("li");
+        fecha.setAttribute("class","item-1")
+        fecha.innerHTML= fechaDolar;
+
+        let precioText= document.createElement("li");
+        precioText.setAttribute("class","item-2")
+        precioText.innerHTML=  "VALOR EN PESOS:";
+        let precio = document.createElement("li");
+        precio.setAttribute("class","item-3")
+        precio.innerHTML="$"+precioDolar;
+        dataBank.append(fechaText,fecha,precioText,precio);
+});
+
