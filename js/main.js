@@ -21,7 +21,7 @@ let menuDesplegable=["menuDesplegable0","menuDesplegable1"];
 let menuLogeado=["menuLogeado"];
 
 let listaInicio=[];
-listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,listaMostrarLog,listaOcultarLog,menuLogeado);
+listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,menuLogeado,listaMostrarLog,listaOcultarLog);
 cambioDisplay(listaInicio,dispNone);
 listaOcultarLog.unshift("idLogear","idRegistrar");
 
