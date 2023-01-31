@@ -6,6 +6,10 @@ let usuarioActivo="";
 let passUsserActivo="";
 let saldoUsserActivo=0;
 let ingresar=false;
+let dispBlock="block";
+let dispNone="none";
+let dispFlex="flex";
+
 
 let saldoMostrar=["mostrarSaldo","actualizaSaldo"];
 let depositoMostrar=["saldoDeposito","inputDeposito","btnDeposito"];
@@ -13,25 +17,28 @@ let transferirMostrar=["saldoTransferir","cbuTransferencia","montoTransferencia"
 let extraerMostrar=["saldoExtraccion","extraerDinero","confirmaPass","btnExtraer"];
 let listaMostrarLog=["btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion"];
 let listaOcultarLog=["ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit"];
+let menuDesplegable=["menuDesplegable0","menuDesplegable1"];
+let menuLogeado=["menuLogeado"];
 
 let listaInicio=[];
-listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,listaMostrarLog,listaOcultarLog);
-ocultandoClase(listaInicio);
+listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,listaMostrarLog,listaOcultarLog,menuLogeado);
+cambioDisplay(listaInicio,dispNone);
 listaOcultarLog.unshift("idLogear","idRegistrar");
-actualizaSaldo
+
+
 inicio ();
 
 function inicio (){
     usserLista=JSON.parse(localStorage.getItem("usuarios"));
 
-    var botonIngreso = document.getElementById("idLogear");
+    let botonIngreso = document.getElementById("idLogear");
     botonIngreso.addEventListener("click",()=>{
         let listaMostrar=["ingreseUsuario","ingresePass","btnIngreso"]
         switchOcutar(listaMostrar);
         ingresoForm();
         }
     );
-    var botonRegistro = document.getElementById("idRegistrar");
+    let botonRegistro = document.getElementById("idRegistrar");
     botonRegistro.addEventListener("click",()=>{
         let listaMostrar=["crearUser","crearPass","repitePass","btnRegistrar","btnSubmit"]
         switchOcutar(listaMostrar);
@@ -47,7 +54,7 @@ function inicio (){
 }
 
 function ingresoForm(){
-    var botonIngreso = document.getElementById("btnIngreso");
+    let botonIngreso = document.getElementById("btnIngreso");
     botonIngreso.addEventListener("click",()=>{
         let usser = document.getElementById("ingreseUsuario");
         let usserPass = document.getElementById("ingresePass");
@@ -78,7 +85,7 @@ function ingresoForm(){
 }
 
 function registroFrom(){
-    var botonRegistro = document.getElementById("btnRegistrar");
+    let botonRegistro = document.getElementById("btnRegistrar");
     botonRegistro.addEventListener("click",()=>{
         let registroUsser= document.getElementById("crearUser").value;
         let registroPass= document.getElementById("crearPass").value;
@@ -130,10 +137,12 @@ function logeado(){
         document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
         //cambio clases de variables para mostrar/ocultar
         funActSaldo();
-        ocultandoClase(listaOcultarLog);      
-        mostrandoClase(listaMostrarLog);
+        cambioDisplay(listaOcultarLog,dispNone);      
+        cambioDisplay(listaMostrarLog,dispBlock);
+        cambioDisplay(menuDesplegable,dispNone)
+        cambioDisplay(menuLogeado,dispFlex)
 
-        
+
         //estos son arrays que contienen las id de los elementos que cambiaran su visibilidad al recibir click en un determinado boton.
         let btn_funSaldo = document.getElementById ("idVerSaldo");
         if(btn_funSaldo)btn_funSaldo.addEventListener("click",()=>{switchOcutar(saldoMostrar)});//llamo a funcion con parametros que realiza el cambio de clases, en ella se llama el array que cambiará su clase segun se presione su respectivo boton.
@@ -180,8 +189,10 @@ function deslogear(){
         let listaOcultar =["saldoDeposito","mostrarSaldo","ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit","btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","actualizaSaldo","inputDeposito","btnDeposito","saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir","saldoExtraccion","extraerDinero","confirmaPass","btnExtraer"];
         let reinicioInput =["ingreseUsuario","ingresePass"]
         //array que cambiará su clase para mostrar/ocultarse
-        ocultandoClase(listaOcultar);
-        mostrandoClase(listaMostrar);
+        cambioDisplay(listaOcultar,dispNone);
+        cambioDisplay(listaMostrar,dispBlock);
+        cambioDisplay(menuDesplegable,dispFlex);  
+        cambioDisplay(menuLogeado,dispNone)
         reiniciandoInput(reinicioInput);
         //limpiando los input.
         usuarioActivo,passUsserActivo="";
@@ -304,29 +315,21 @@ function funActSaldo(){
     document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
     document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
 }//funcion que se utiliza para actualizar el saldo mostrado en pantalla luego de una operacion o al presionar los botones "actualizar saldo"
-function ocultandoClase(lista){
-    for (var x=0; x<lista.length;x++ ){
-        document.getElementById(lista[x]).style.display = 'none';
-        console.log("nuevo display none de "+lista[x]);
+function cambioDisplay(lista,display){
+    for (let x=0; x<lista.length;x++ ){
+        document.getElementById(lista[x]).style.display = display;
+        console.log("nuevo display "+ display+ " de " +lista[x]);
        } // cambio de clase en recursion a objetos que llevarán la misma clase.
 }
-
-function mostrandoClase(lista){
-    for (var x=0; x<lista.length;x++ ){
-        document.getElementById(lista[x]).style.display = 'block';
-        console.log("nuevo display block de "+lista[x]);
-       } // cambio de clase en recursion a objetos que llevarán la misma clase.
-    }
-
     function reiniciandoInput(lista){
-        for (var x=0; x<lista.length;x++ ){
+        for (let x=0; x<lista.length;x++ ){
             document.getElementById(lista[x]).value="";
             console.log("limpiando input de "+lista[x]);
            } // cambio de clase en recursion a objetos que llevarán la misma clase.
 
         }
     function switchOcutar(lista){
-        for (var x=0; x<lista.length;x++ ){
+        for (let x=0; x<lista.length;x++ ){
             if (document.getElementById(lista[x]).style.display == 'none'){
                 document.getElementById(lista[x]).style.display = 'block';
             }
@@ -336,3 +339,5 @@ function mostrandoClase(lista){
             console.log("nuevo display none de "+lista[x]);
         }
     }
+
+    

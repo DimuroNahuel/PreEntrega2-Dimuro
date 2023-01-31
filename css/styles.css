@@ -56,32 +56,6 @@ background-image: url(../image/atm.png) ;
     border: none;
     background: none;
 }
-/* .saldoTransferir,
-.saldoExtraccion,
-.muestraSaldo,
-.actualizarSaldo, 
-.classSaldoDeposito, 
-.inputDeposito, 
-.btnDeposito, 
-.cbuTransferencia, 
-.montoTransferencia, 
-.motivoTransferencia, 
-.btnTransferir, 
-.ExtraerDinero, 
-.confirmaPass, 
-.btnExtraer,
-.formLogin, 
-.formReg,
-.btnSALIR,
-.menuDesp,
-.oculto
-{
-    display: none;
-} */
-
-/* .show{
-    display: block;
-} */
 
 ul {
     display: flex;
@@ -154,12 +128,13 @@ input{
   {width: 40%;}
 
   .menuLogeado{
-    top: -100px;
     position: relative;
   }
 
   #title{
     color: #495057;
+    padding: 2%;
+
   }
 
  
