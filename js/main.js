@@ -10,6 +10,7 @@ let ingresar=false;
 let dispBlock="block";
 let dispNone="none";
 let dispFlex="flex";
+let dispGrid="grid";
 let fechaDolar="";
 let precioDolar=0;
 
@@ -27,6 +28,8 @@ let listaOcultarLog=["ingreseUsuario","ingresePass","btnIngreso","crearUser","cr
 let menuDesplegable=["menuDesplegable0","menuDesplegable1"];
 let menuLogeado=["menuLogeado"];
 
+let timeIniciando=["idLogear","idRegistrar","title"]
+
 //DESLOGEO
     let listaMostrar=["idLogear","idRegistrar"];
     let listaOcultar =["saldoDeposito","mostrarSaldo","ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit","btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","actualizaSaldo","inputDeposito","btnDeposito","saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir","saldoExtraccion","extraerDinero","confirmaPass","btnExtraer","mostrarSaldoDolar","comprarDolar","textCompraDolar","montoComprar","btnComprar","venderDolar","textVenderDolar","montoVender","btnVender"];
@@ -40,9 +43,19 @@ listaOcultarLog.unshift("idLogear","idRegistrar");
 
 Swal.fire(
     'Bienvenido a nuestro sistema ATM',
-    'realice depositos, transferencias a los demas usuarios y hasta extracciones en un solo lugar',
+    'Por favor aguarde, en instantes podrá ingresar',
   )
-inicio ();
+
+cambioDisplay(timeIniciando,dispNone);
+document.getElementById("dolar").style.display= dispNone
+  setTimeout(()=>{
+    cambioDisplay(timeIniciando,dispBlock);
+    document.getElementById("dolar").style.display= dispGrid
+    inicio ();
+  },2000);
+
+
+
 
 //BOTONES PARA EL MENU LUEGO DEL LOGEO, CON EL MENU DESPLEGADO.
 let btnDepositar = document.getElementById("btnDeposito");
@@ -374,7 +387,7 @@ function comprarDolar(){
     let dolarTotal = parseFloat((valorInput*precioDolar).toFixed(2));
     if (dolarTotal<=saldoUsserActivo && valorInput>0){
 
-        saldoUsserActivo=saldoUsserActivo-dolarTotal;
+        saldoUsserActivo=((saldoUsserActivo*1000)-(dolarTotal*1000))/1000;
         saldoDolarActivo=saldoDolarActivo+valorInput;
         usserLista[indiceUser].saldo=saldoUsserActivo;
         usserLista[indiceUser].saldoDolar=saldoDolarActivo;
@@ -392,7 +405,7 @@ function comprarDolar(){
         else{
             Swal.fire(
                 '¡Hubo un problema!',
-                'Monto insuficiente para la compra',
+                'Revise su saldo y recuerde: no compramos centimos',
                 'error')
         }
 }
@@ -402,7 +415,7 @@ function venderDolar(){
     let dolarTotal = parseFloat((valorInput*precioDolar).toFixed(2));
     if (valorInput<=saldoDolarActivo && valorInput>0){
 
-        saldoUsserActivo=saldoUsserActivo+dolarTotal;
+        saldoUsserActivo=((saldoUsserActivo*1000)+(dolarTotal*1000));
         saldoDolarActivo=saldoDolarActivo-valorInput;
         usserLista[indiceUser].saldo=saldoUsserActivo;
         usserLista[indiceUser].saldoDolar=saldoDolarActivo;
@@ -418,18 +431,18 @@ function venderDolar(){
         else{
             Swal.fire(
                 '¡Hubo un problema!',
-                'Monto insuficiente para vender',
+                'Revise su saldo y recuerde: no vendemos centimos',
                 'error')
         }
 }
 
 function funActSaldo(){
-    document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
-    document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
-    document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
-    document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+    document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
+    document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
+    document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
+    document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
 
-    document.getElementById("mostrarSaldoDolar").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+    document.getElementById("mostrarSaldoDolar").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
     
     document.getElementById("textCompraDolar").textContent = "COSTO EN AR$ : ";
     document.getElementById("textVenderDolar").textContent = "OBTENDRAS EN AR$: ";
