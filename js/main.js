@@ -1,10 +1,11 @@
 let datos=12342;
-let usserLista=[{usserSavee:"admin",passSavee:"1234", saldo:0}];
+let usserLista=[{usserSavee:"admin",passSavee:"1234", saldo:0, saldoDolar:0}];
 let arrayAux=[];
 let indiceUser=0;
 let usuarioActivo="";
 let passUsserActivo="";
 let saldoUsserActivo=0;
+let saldoDolarActivo=0;
 let ingresar=false;
 let dispBlock="block";
 let dispNone="none";
@@ -17,19 +18,23 @@ let saldoMostrar=["mostrarSaldo","actualizaSaldo"];
 let depositoMostrar=["saldoDeposito","inputDeposito","btnDeposito"];
 let transferirMostrar=["saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir"];
 let extraerMostrar=["saldoExtraccion","extraerDinero","confirmaPass","btnExtraer"];
-let listaMostrarLog=["btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion"];
+let dolarMostrar=["mostrarSaldoDolar","comprarDolar","venderDolar"];
+let compraDolar=["textCompraDolar","montoComprar","btnComprar"];
+let ventaDolar=["textVenderDolar","montoVender","btnVender"];
+
+let listaMostrarLog=["btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","dolares"];
 let listaOcultarLog=["ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit"];
 let menuDesplegable=["menuDesplegable0","menuDesplegable1"];
 let menuLogeado=["menuLogeado"];
 
 //DESLOGEO
     let listaMostrar=["idLogear","idRegistrar"];
-    let listaOcultar =["saldoDeposito","mostrarSaldo","ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit","btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","actualizaSaldo","inputDeposito","btnDeposito","saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir","saldoExtraccion","extraerDinero","confirmaPass","btnExtraer"];
+    let listaOcultar =["saldoDeposito","mostrarSaldo","ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit","btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","actualizaSaldo","inputDeposito","btnDeposito","saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir","saldoExtraccion","extraerDinero","confirmaPass","btnExtraer","mostrarSaldoDolar","comprarDolar","textCompraDolar","montoComprar","btnComprar","venderDolar","textVenderDolar","montoVender","btnVender"];
     let reinicioInput =["ingreseUsuario","ingresePass"]
 //DESLOGEO
 
 let listaInicio=[];
-listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,menuLogeado,listaMostrarLog,listaOcultarLog);
+listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,menuLogeado,listaMostrarLog,listaOcultarLog,dolarMostrar,compraDolar,ventaDolar);
 cambioDisplay(listaInicio,dispNone);
 listaOcultarLog.unshift("idLogear","idRegistrar");
 
@@ -52,11 +57,21 @@ if(btnTransferir){btnTransferir.addEventListener("click",transferir);
 let actualizaSaldo = document.getElementById("actualizaSaldo");
 if(actualizaSaldo){actualizaSaldo.addEventListener("click",funActSaldo);  
 }
+
+let btnComprar = document.getElementById("btnComprar");
+if (btnComprar){btnComprar.addEventListener("click",comprarDolar);}
+
+let btnVender = document.getElementById("btnVender");
+if (btnVender){btnVender.addEventListener("click",venderDolar);}
+
 let btnSALIR = document.getElementById ("btnSALIR");
 if(btnSALIR){btnSALIR.addEventListener("click",()=>{
     document.getElementById("title").textContent = "Bienvenido ";
     cambioDisplay(listaOcultar,dispNone);
     cambioDisplay(menuLogeado,dispNone);
+    cambioDisplay(ventaDolar,dispNone);
+    cambioDisplay(compraDolar,dispNone);
+    cambioDisplay(ventaDolar,dispNone);
 
     cambioDisplay(listaMostrar,dispBlock);
     cambioDisplay(menuDesplegable,dispFlex); 
@@ -69,8 +84,25 @@ if(btnSALIR){btnSALIR.addEventListener("click",()=>{
         '¡Saliendo...!',
         'Gracias por utilizar nuestro sistema',
         'success')
+
 });
 }
+
+ 
+let inputComprar = document.getElementById("montoComprar");
+let textoComprar = document.getElementById("textCompraDolar");
+inputComprar.addEventListener("keyup",()=>{
+    textoComprar.innerHTML = "COSTO EN AR$ : "+precioDolar*inputComprar.value;
+})
+
+let inputVender = document.getElementById("montoVender");
+let textoVender = document.getElementById("textVenderDolar");
+inputVender.addEventListener("keyup",()=>{
+    textoVender.innerHTML = "OBTENDRAS EN AR$: "+precioDolar*inputVender.value;     
+    
+})
+
+
 //BOTONES PARA EL MENU LUEGO DEL LOGEO, CON EL MENU DESPLEGADO.
 
 
@@ -96,13 +128,29 @@ let btn_funExtraccion = document.getElementById ("idExtraccion");
 if(btn_funExtraccion)btn_funExtraccion.addEventListener("click",()=>{
     switchOcutar(extraerMostrar);
 });
+
+let btn_funDolar = document.getElementById ("dolares");
+if(btn_funDolar)btn_funDolar.addEventListener("click",()=>{
+    switchOcutar(dolarMostrar);
+});
+
+let btn_funComprar = document.getElementById ("comprarDolar");
+if(btn_funComprar)btn_funComprar.addEventListener("click",()=>{
+    switchOcutar(compraDolar);
+});
+
+let btn_funVender = document.getElementById ("venderDolar");
+if(btn_funVender)btn_funVender.addEventListener("click",()=>{
+    switchOcutar(ventaDolar);
+});
 //SWITCH PARA MENUS DENTRO DEL LOGEO
 
 
 
 function inicio (){
-    usserLista=JSON.parse(localStorage.getItem("usuarios"));
-
+    if (JSON.parse(localStorage.getItem("usuarios"))){    
+        usserLista=JSON.parse(localStorage.getItem("usuarios"));
+    }
     let botonIngreso = document.getElementById("idLogear");
     botonIngreso.addEventListener("click",()=>{
         let listaMostrar=["ingreseUsuario","ingresePass","btnIngreso"]
@@ -142,6 +190,7 @@ function ingresoForm(){
             usuarioActivo=usserLista[buscar].usserSavee;
             passUsserActivo=usserLista[buscar].passSavee;
             saldoUsserActivo=usserLista[buscar].saldo;
+            saldoDolarActivo=usserLista[buscar].saldoDolar;
 
             document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
             funActSaldo();
@@ -153,7 +202,7 @@ function ingresoForm(){
             
             
         }
-        if (ingresar==false&& botonIngreso) { //si ingresa datos invalidos dará error.
+        else if (ingresar==false&& botonIngreso) { //si ingresa datos invalidos dará error.
             Swal.fire(
                 '¡Hubo un problema!',
                 'INTENTE NUEVAMENTE',
@@ -178,7 +227,7 @@ function registroFrom(){
                     'Bienvenido a nuestro sistema '+registroUsser,
                     'success'
                   )
-                let newUser={usserSavee:registroUsser, passSavee:registroPass, saldo:0};
+                let newUser={usserSavee:registroUsser, passSavee:registroPass, saldo:0, saldoDolar:0};
                 usserLista.push(newUser);//se agrega el usuario registrado al array de usuarios, para poder logear.
                 guardarLocal();
                 let reinicioInput=["crearUser","crearPass","repitePass"]
@@ -217,7 +266,7 @@ function guardarLocal(){
 function deposito(){
     if(document.getElementById("inputDeposito").value!="" && document.getElementById("inputDeposito").value>0){
         //validacion para depositar o no
-        const saldoAux = document.getElementById("inputDeposito");
+        let saldoAux = document.getElementById("inputDeposito");
         console.log("SALDO ANTERIOR= "+saldoUsserActivo);
         console.log("SALDO INGRESADO= "+parseInt(saldoAux.value,10));
         saldoUsserActivo=saldoUsserActivo+parseInt(saldoAux.value,10);
@@ -320,11 +369,72 @@ function transferir(){
     }
 }
 
+function comprarDolar(){
+    let valorInput = parseInt(document.getElementById("montoComprar").value,10);
+    let dolarTotal = parseFloat((valorInput*precioDolar).toFixed(2));
+    if (dolarTotal<=saldoUsserActivo && valorInput>0){
+
+        saldoUsserActivo=saldoUsserActivo-dolarTotal;
+        saldoDolarActivo=saldoDolarActivo+valorInput;
+        usserLista[indiceUser].saldo=saldoUsserActivo;
+        usserLista[indiceUser].saldoDolar=saldoDolarActivo;
+        
+        funActSaldo();
+        guardarLocal();
+
+        document.getElementById("montoComprar").value="";
+        Swal.fire(
+            '¡Operación exitosa!',
+            'Se ha realizado su compra',
+            'success') 
+   
+        }
+        else{
+            Swal.fire(
+                '¡Hubo un problema!',
+                'Monto insuficiente para la compra',
+                'error')
+        }
+}
+
+function venderDolar(){
+    let valorInput = parseInt(document.getElementById("montoVender").value,10);
+    let dolarTotal = parseFloat((valorInput*precioDolar).toFixed(2));
+    if (valorInput<=saldoDolarActivo && valorInput>0){
+
+        saldoUsserActivo=saldoUsserActivo+dolarTotal;
+        saldoDolarActivo=saldoDolarActivo-valorInput;
+        usserLista[indiceUser].saldo=saldoUsserActivo;
+        usserLista[indiceUser].saldoDolar=saldoDolarActivo;
+
+        guardarLocal();
+        funActSaldo();
+        document.getElementById("montoVender").value="";
+        Swal.fire(
+            '¡Operación exitosa!',
+            'Se ha realizado su venta',
+            'success')    
+        }
+        else{
+            Swal.fire(
+                '¡Hubo un problema!',
+                'Monto insuficiente para vender',
+                'error')
+        }
+}
+
 function funActSaldo(){
-    document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
-    document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
-    document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
-    document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: $"+saldoUsserActivo;
+    document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+    document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+    document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+    document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+
+    document.getElementById("mostrarSaldoDolar").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" US$ "+saldoDolarActivo;
+    
+    document.getElementById("textCompraDolar").textContent = "COSTO EN AR$ : ";
+    document.getElementById("textVenderDolar").textContent = "OBTENDRAS EN AR$: ";
+
+
 }//funcion que se utiliza para actualizar el saldo mostrado en pantalla luego de una operacion o al presionar los botones "actualizar saldo"
 function cambioDisplay(lista,display){
     console.log("---------------------------------------------->");

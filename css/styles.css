@@ -78,7 +78,7 @@ input{
     padding: 10% 20%;
  }
 
- #idVerSaldo, #idDeposito, #idTransferir, #idExtraccion, #btnSALIR, #idLogear, #idRegistrar
+ #idVerSaldo, #idDeposito, #idTransferir, #idExtraccion, #btnSALIR, #idLogear, #idRegistrar, #dolares, #comprarDolar, #venderDolar
   {
     min-width: 130px;
     height: 40px;
@@ -92,8 +92,13 @@ input{
     border: 2px solid #fff;
     background: #495057;
   }
+  #comprarDolar, #venderDolar{
+    width: 30%;
+    min-width: 10px;
+  }
 
-  #actualizaSaldo, #btnDeposito, #btnTransferir, #btnExtraer, #btnSubmit, #btnRegistrar, #btnIngreso{
+
+  #actualizaSaldo, #btnDeposito, #btnTransferir, #btnExtraer, #btnSubmit, #btnRegistrar, #btnIngreso, #btnComprar, #btnVender{
     min-width: 130px;
     height: 40px;
     color: #495057;
