@@ -14,7 +14,7 @@ let dispGrid="grid";
 let fechaDolar="";
 let precioDolar=0;
 
-
+//estas son listas de ids, que serán utilizadas mas adelante para cambiar el display durante la ejecucion de funcionalidades de la web.
 let saldoMostrar=["mostrarSaldo","actualizaSaldo"];
 let depositoMostrar=["saldoDeposito","inputDeposito","btnDeposito"];
 let transferirMostrar=["saldoTransferir","cbuTransferencia","montoTransferencia","motivoTransferencia","btnTransferir"];
@@ -22,7 +22,7 @@ let extraerMostrar=["saldoExtraccion","extraerDinero","confirmaPass","btnExtraer
 let dolarMostrar=["mostrarSaldoDolar","comprarDolar","venderDolar"];
 let compraDolar=["textCompraDolar","montoComprar","btnComprar"];
 let ventaDolar=["textVenderDolar","montoVender","btnVender"];
-
+//BOTONES
 let listaMostrarLog=["btnSALIR","idVerSaldo","idDeposito","idTransferir","idExtraccion","dolares"];
 let listaOcultarLog=["ingreseUsuario","ingresePass","btnIngreso","crearUser","crearPass","repitePass","btnRegistrar","btnSubmit"];
 let menuDesplegable=["menuDesplegable0","menuDesplegable1"];
@@ -40,6 +40,8 @@ let listaInicio=[];
 listaInicio= listaInicio.concat(saldoMostrar,depositoMostrar,transferirMostrar,extraerMostrar,menuLogeado,listaMostrarLog,listaOcultarLog,dolarMostrar,compraDolar,ventaDolar);
 cambioDisplay(listaInicio,dispNone);
 listaOcultarLog.unshift("idLogear","idRegistrar");
+//ya dispongo de todos los elementos creados en el html, pero al cargar la web, oculto los que necesitan logearse para poder ser vistos.
+
 
 Swal.fire(
     'Bienvenido a nuestro sistema ATM',
@@ -52,10 +54,7 @@ document.getElementById("dolar").style.display= dispNone
     cambioDisplay(timeIniciando,dispBlock);
     document.getElementById("dolar").style.display= dispGrid
     inicio ();
-  },2000);
-
-
-
+  },2000); //aqui ocuto los elementos del inicio hasta que la api se cargue, para poder visualizar todo al mismo tiempo. 
 
 //BOTONES PARA EL MENU LUEGO DEL LOGEO, CON EL MENU DESPLEGADO.
 let btnDepositar = document.getElementById("btnDeposito");
@@ -80,15 +79,11 @@ if (btnVender){btnVender.addEventListener("click",venderDolar);}
 let btnSALIR = document.getElementById ("btnSALIR");
 if(btnSALIR){btnSALIR.addEventListener("click",()=>{
     document.getElementById("title").textContent = "Bienvenido ";
-    cambioDisplay(listaOcultar,dispNone);
-    cambioDisplay(menuLogeado,dispNone);
-    cambioDisplay(ventaDolar,dispNone);
-    cambioDisplay(compraDolar,dispNone);
-    cambioDisplay(ventaDolar,dispNone);
-
+    let listaAux =[];
+    listaAux=listaAux.concat("listaOcultar","menuLogeado","ventaDolar","compraDolar")
+    cambioDisplay(listaAux,dispNone); // agrupo varias listas en una temporal para el cambio de display y asi achicar lineas de codigo
     cambioDisplay(listaMostrar,dispBlock);
     cambioDisplay(menuDesplegable,dispFlex); 
-
     reiniciandoInput(reinicioInput);
     //limpiando los input.
     usuarioActivo,passUsserActivo="";
@@ -100,14 +95,12 @@ if(btnSALIR){btnSALIR.addEventListener("click",()=>{
 
 });
 }
-
- 
+// texto dinamico, al momento de seleccionar la cantidad de dolares a comprar/vender, este texto se actualiza haciendo el calculo del costo real en pesos.
 let inputComprar = document.getElementById("montoComprar");
 let textoComprar = document.getElementById("textCompraDolar");
 inputComprar.addEventListener("keyup",()=>{
     textoComprar.innerHTML = "COSTO EN AR$ : "+precioDolar*inputComprar.value;
 })
-
 let inputVender = document.getElementById("montoVender");
 let textoVender = document.getElementById("textVenderDolar");
 inputVender.addEventListener("keyup",()=>{
@@ -145,6 +138,10 @@ if(btn_funExtraccion)btn_funExtraccion.addEventListener("click",()=>{
 let btn_funDolar = document.getElementById ("dolares");
 if(btn_funDolar)btn_funDolar.addEventListener("click",()=>{
     switchOcutar(dolarMostrar);
+    if (document.getElementById("comprarDolar").style.display=='none'){
+        cambioDisplay(compraDolar,dispNone); // al tener varios botones anidados, debo realizar una comprobacion extra para que se cambien los displays al mismo tiempo.
+        cambioDisplay(ventaDolar,dispNone);
+    }
 });
 
 let btn_funComprar = document.getElementById ("comprarDolar");
@@ -163,27 +160,27 @@ if(btn_funVender)btn_funVender.addEventListener("click",()=>{
 function inicio (){
     if (JSON.parse(localStorage.getItem("usuarios"))){    
         usserLista=JSON.parse(localStorage.getItem("usuarios"));
-    }
+    }//traigo a los usuarios guardados en el localstorage en caso de haber.
     let botonIngreso = document.getElementById("idLogear");
     botonIngreso.addEventListener("click",()=>{
         let listaMostrar=["ingreseUsuario","ingresePass","btnIngreso"]
         switchOcutar(listaMostrar);
         ingresoForm();
         }
-    );
+    );//funcionamiento de boton "ingreso"
     let botonRegistro = document.getElementById("idRegistrar");
     botonRegistro.addEventListener("click",()=>{
         let listaMostrar=["crearUser","crearPass","repitePass","btnRegistrar","btnSubmit"]
         switchOcutar(listaMostrar);
         registroFrom();
         }
-    );
+    );//funcionamiento de boton "registro"
 
     let btnSubmit = document.getElementById("btnSubmit");
     if(btnSubmit)btnSubmit.addEventListener("click",()=>{
         let reinicioInput=["crearUser","crearPass","repitePass"]
         reiniciandoInput(reinicioInput);
-    })
+    });////funcionamiento de boton "sumbit"
 }
 
 function ingresoForm(){
@@ -204,7 +201,7 @@ function ingresoForm(){
             passUsserActivo=usserLista[buscar].passSavee;
             saldoUsserActivo=usserLista[buscar].saldo;
             saldoDolarActivo=usserLista[buscar].saldoDolar;
-
+            //guardo datos del usuario logeado para utilizar mas adelante.
             document.getElementById("title").textContent = "Bienvenido "+usuarioActivo+"";
             funActSaldo();
             cambioDisplay(listaOcultarLog,dispNone);  
@@ -385,16 +382,13 @@ function transferir(){
 function comprarDolar(){
     let valorInput = parseInt(document.getElementById("montoComprar").value,10);
     let dolarTotal = parseFloat((valorInput*precioDolar).toFixed(2));
-    if (dolarTotal<=saldoUsserActivo && valorInput>0){
-
+    if (dolarTotal<=saldoUsserActivo && valorInput>0){//funcion compra de dolar, validacion.
         saldoUsserActivo=((saldoUsserActivo*1000)-(dolarTotal*1000))/1000;
         saldoDolarActivo=saldoDolarActivo+valorInput;
         usserLista[indiceUser].saldo=saldoUsserActivo;
         usserLista[indiceUser].saldoDolar=saldoDolarActivo;
-        
-        funActSaldo();
+        funActSaldo();//guardado de datos en variables y en localstorage
         guardarLocal();
-
         document.getElementById("montoComprar").value="";
         Swal.fire(
             '¡Operación exitosa!',
@@ -410,16 +404,14 @@ function comprarDolar(){
         }
 }
 
-function venderDolar(){
+function venderDolar(){ //funcion para la venta de dolar
     let valorInput = parseInt(document.getElementById("montoVender").value,10);
     let dolarTotal = parseFloat((valorInput*precioDolar).toFixed(2));
-    if (valorInput<=saldoDolarActivo && valorInput>0){
-
+    if (valorInput<=saldoDolarActivo && valorInput>0){ // validacion
         saldoUsserActivo=((saldoUsserActivo*1000)+(dolarTotal*1000));
         saldoDolarActivo=saldoDolarActivo-valorInput;
         usserLista[indiceUser].saldo=saldoUsserActivo;
         usserLista[indiceUser].saldoDolar=saldoDolarActivo;
-
         guardarLocal();
         funActSaldo();
         document.getElementById("montoVender").value="";
@@ -436,18 +428,14 @@ function venderDolar(){
         }
 }
 
-function funActSaldo(){
-    document.getElementById("saldoDeposito").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
-    document.getElementById("mostrarSaldo").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
-    document.getElementById("saldoExtraccion").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
-    document.getElementById("saldoTransferir").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
-
-    document.getElementById("mostrarSaldoDolar").textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
-    
+function funActSaldo(){//funcion para actualizar los saldos mostrados en pantalla, luego de realizar una operacion.
+    let saldos=["saldoDeposito","mostrarSaldo","saldoExtraccion","saldoTransferir","mostrarSaldoDolar"]
+    for (let x=0; x<saldos.length;x++ ){
+        let elemento=document.getElementById(saldos[x]);
+        elemento.textContent = "SU SALDO ACTUAL ES: AR$"+saldoUsserActivo+" || US$ "+saldoDolarActivo;
+    }
     document.getElementById("textCompraDolar").textContent = "COSTO EN AR$ : ";
     document.getElementById("textVenderDolar").textContent = "OBTENDRAS EN AR$: ";
-
-
 }//funcion que se utiliza para actualizar el saldo mostrado en pantalla luego de una operacion o al presionar los botones "actualizar saldo"
 function cambioDisplay(lista,display){
     console.log("---------------------------------------------->");
@@ -478,7 +466,7 @@ function cambioDisplay(lista,display){
         }//funcion utilizada para negar el estado de cada elemento del array, los estados son none o block
     }
     
-    fetch("https://api.estadisticasbcra.com/usd_of",{
+    fetch("https://api.estadisticasbcra.com/usd_of",{ //api para obtener la cotizacion en tiempo real del dolar, esto me permite operar en base a ese precio.
         headers:{
             Authorization: "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDY3MjQzNDEsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJuYWh1ZWwuZGltdXJvQGhvdG1haWwuY29tIn0.KWt6PevIQz_-VMqyMd9Os8b3NfffRlVtkGiGWuW0zmJRspMjL_0mS8pDHAGLjG0O3AadPMB4BKFJiaw6Cl8l_A",
         },
